@@ -1,89 +1,132 @@
-let passos = [];
+const pecas = [];
 let passo = 0;
-let passoAtual = null;
 
-function start() {
-    gerarPasso('peca1');
-    gerarPasso('peca2');
-    gerarPasso('peca3');
-    gerarPasso('peca4');
+addPeca('peca1');
+addPeca('peca2');
+addPeca('peca3');
+addPeca('peca4');
 
-    let frente = document.getElementById("frente");
-    frente.addEventListener("mouseenter", (e) => {
-        count();
-        let from = {
-            fx: 0.6,
-            fy: 0,
-            fz: 1
-        };
-        let to = {
-            tx: 0,
-            ty: 0,
-            tz: 0
-        };
-        atualizarPasso(from, to, true)
-    })
+let pecaAtual = pecas[0];
 
-    let tras = document.getElementById("tras");
-    tras.addEventListener("mouseenter", (e) => {
-        let from = {
-            fx: 0.6,
-            fy: 0,
-            fz: 1
-        };
-        let to = {
-            tx: 0.6,
-            ty: 0,
-            tz: 1
-        };
-        atualizarPasso(from, to, false);
-        countSub();
-    })
-
-    let loop = document.getElementById("loop");
-    loop.addEventListener("mouseenter", (e) => {
-        passoAtual.repetir = !passoAtual.repetir;
-        let from = {
-            fx: 0.6,
-            fy: 0,
-            fz: 1
-        };
-        let to = {
-            tx: 0,
-            ty: 0,
-            tz: 0
-        };
-        atualizarPasso(from, to, true);
-    })
-
-};
-window.addEventListener("load", start, false);
-
-function gerarPasso(id, repetir = false, duracao = 1500) {
-    passos.push({id, repetir, duracao})
+function addPeca(id) {
+    pecas.push(id)
 }
 
-function atualizarPasso({
-    fx = 0,
-    fy = 0,
-    fz = 0
-}, {
-    tx = 0,
-    ty = 0,
-    tz = 0
-}, visible = true) {
+function generateAttribute({
+    id,
+    property = 'position',
+    dur = 1000,
+    from,
+    to,
+    loop,
+    easing,
+    elasticity
+}) {
+    const e = document.getElementById(id);
+    e.setAttribute('animation', {
+        property,
+        dur,
+        from,
+        to,
+        loop,
+        easing,
+        elasticity
+    });
+}
+
+function virarPraEsquerda() {
+    let e = document.getElementsByClassName('cPeca');
+    for (let i in e) {
+        let item = e[i]
+        item.object3D.rotation.y -= 0.9
+    }
+}
+
+function virarPraDireita() {
+    pecas.forEach(peca => {
+        let e = document.getElementById(peca);
+        e.object3D.rotation.y += 0.9
+    })
+}
+
+document
+    .querySelector("#tras")
+    .addEventListener("click", () => {
+        generateAttribute({id: pecaAtual})
+    });
+document
+    .querySelector("#frente")
+    .addEventListener("click", () => {
+        generateAttribute({id: pecaAtual})
+    });
+
+document
+    .querySelector("#setaEsquerda")
+    .addEventListener("click", () => {
+        virarPraEsquerda();
+    });
+document
+    .querySelector("#setaDireita")
+    .addEventListener("click", () => {
+        virarPraDireita();
+    });
+
+function CheckMobile() {
+
+    if (AFRAME.utils.device.isMobile() == false) { // DESKTOP
+        var el = document.querySelector("#mycursor");
+        el.setAttribute('cursor', 'rayOrigin: mouse;fuse: false');
+    } else {
+        var el = document.querySelector("#mycursor"); // MOBILE
+        el.setAttribute('cursor', 'rayOrigin: cursor;fuse: true');
+        el.object3D.visible = true;
+    }
+}
+
+document
+    .querySelector('a-scene')
+    .addEventListener('enter-vr', () => {
+        var el2 = document.querySelector("#mycursor");
+        el2.setAttribute('cursor', 'rayOrigin: cursor; fuse: true;');
+        el2.object3D.visible = true;
+        var el = document.querySelector("#CameraPosition");
+        el
+            .object3D
+            .position
+            .set(0, 0, 4.5);
+    });
+window.onload = function () {
+    CheckMobile();
+};
+
+let frente = document.getElementById("frente");
+frente.addEventListener("click", (e) => {
+    count();
+    let from = '0.6 0 1'
+    let to = '0 0 0'
+    atualizarPasso(from, to)
+})
+
+let tras = document.getElementById("tras");
+tras.addEventListener("click", (e) => {
+    let from = '0.6 0 1'
+    let to = '0.6 0 1'
+    atualizarPasso(from, to, false);
+    countSub();
+})
+
+function atualizarPasso(from, to, visible = true) {
     if (passo > 0) {
-        passoAtual = passos[passo - 1];
-        let el = document.getElementById(passoAtual.id);
-        let valueAnimation = `property: position; dur: ${passoAtual.duracao}; from: ${fx} ${fy} ${fz}; to: ${tx} ${ty} ${tz} ;loop: ${passoAtual.repetir};`;
-        el.setAttribute('animation', valueAnimation);
+        pecaAtual = pecas[passo - 1];
+        let el = document.getElementById(pecaAtual);
+        generateAttribute({id: pecaAtual, from, to})
         el.object3D.visible = visible;
     }
 }
 
 function count() {
-    passo = passo >= passos.length
-        ? passos.length
+    passo = passo >= pecas.length
+        ? pecas.length
         : passo + 1;
     document
         .getElementById("count")
