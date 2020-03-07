@@ -1,0 +1,208 @@
+<html>
+  <head>
+    <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <style type="text/css">
+  
+    </style>
+  </head>
+
+ 
+
+  <body style='margin : 0px; overflow: hidden;'>
+    <a-scene arjs="debugUIEnabled: false;">
+     
+   
+      
+  <!-- --------------------------------------------------------------------- -->     
+      
+      <!-- modelo do ambiente -->
+
+      <a-gltf-model id ="ambiente" src="https://raw.githubusercontent.com/KurtRodrigues/AR--teste/master/Hangar.0.2.gltf" position = "0 -1 -4" rotation="0 0 0" scale="2 2 2" size="20px"> </a-gltf-model>
+
+      <a-gltf-model id ="ambiente" src="https://raw.githubusercontent.com/giraudgabriel/Latecoare-VR/feature/Modelagem_3D_cen%C3%A1rio/Bancada/scene.gltf" position = "0 -1 -4" rotation="0 0 0" scale="0.04 0.04 0.04" size="20px"> </a-gltf-model>
+       
+      
+      
+     <!-- --------------------------------------------------------------------- -->   
+     
+    </a-scene>
+  
+
+
+   <script type="text/javascript">
+
+    document.querySelector("button3").addEventListener("click", (e)=>{
+    console.log("+")
+
+    var aviao = document.querySelector('#aviao01');
+    console.log(aviao.setAttribute('animation', 'property: position; dur: 3000; from: 2, -0, 0; to: 0, 1, 1; loop: true;' ));
+
+
+
+    });
+     
+
+     
+   
+
+   BOTAO "TROCAR"
+
+document.querySelector("button").addEventListener("click", (e)=>{
+    
+  console.log("TROCAR")
+ 
+  var el = document.querySelector("#aviao01");
+  var el2 = document.querySelector("#thumbDown");
+  var el4 = document.querySelector("#drill2");
+  var v3 = document.querySelector("#thumbUp");
+ 
+  if ((document.querySelector("#aviao01").object3D.visible == true))  {
+      
+      el.object3D.visible = false;
+      el2.object3D.visible = false;
+      v3.object3D.visible = true;
+      el4.object3D.visible = true;
+  }
+ 
+  else {
+  el.object3D.visible = true;
+  el2.object3D.visible = true;
+  v3.object3D.visible = false;
+  el4.object3D.visible = false;  
+  }
+})
+/*------------------------------------------------------------------*/
+// BOTAO + */
+  document.querySelector("button2").addEventListener("click", (e)=>{
+  console.log("+")
+  
+  //seleção dos objetos pegando a id de cada um  
+  var el = document.querySelector("#bancada");
+  var el2 = document.querySelector("#aviao01");
+  var el3 = document.querySelector("#thumbDown");
+  var el4 = document.querySelector("#thumbUp");
+  var el5 = document.querySelector("#drill2");  
+
+//------------------------------------------------------    
+// Animação da furadeira 
+
+//(SEM stopdrill)
+el2.setAttribute('animation', 'property: position; dur: 3000; from: 0, -1, -1.5; to: 2.4, -2.5, 0; loop: true;' );  
+//(COM stopdrill)
+el5.setAttribute('animation', 'property: position; dur: 3000; from: 0, -1, -1.5; to: 1.4, -1.8, 0; loop: true;' );     
+//--------------------------------------------------   
+    
+// modificação de posição para todos os objetos    
+el.object3D.position.set(-0.5, -1, -1); // bancada
+el2.object3D.position.set(0 -1, -1); // DRIL 
+el3.object3D.position.set(-0.5, -1, -1); // thumbDown
+el4.object3D.position.set(-0.5, -1, -1); // thumbUp
+el5.object3D.position.set(0, -1, -1); // DRILL 2 (com stopdrill)    
+//-------------------------------------------
+//modição do tamanho para todos os objetos 
+ el.object3D.scale.set(5, 5, 5);
+ el2.object3D.scale.set(5, 5, 5);
+ el3.object3D.scale.set(5, 5, 5);
+ el4.object3D.scale.set(5, 5, 5);  
+ el5.object3D.scale.set(5, 5, 5);    
+ //------------------------------------------- 
+
+// modificação da rotação de todos os objetos     
+el.object3D.rotation.set(
+  THREE.Math.degToRad(-45), //x
+  THREE.Math.degToRad(0),   //y
+  THREE.Math.degToRad(0)    //z
+);
+el2.object3D.rotation.set( // DRIL 
+  THREE.Math.degToRad(-45),
+  THREE.Math.degToRad(20),
+  THREE.Math.degToRad(0)
+);
+el3.object3D.rotation.set(  //thumb down 
+  THREE.Math.degToRad(-45),
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0)
+);
+el4.object3D.rotation.set(  //thumb up 
+  THREE.Math.degToRad(-45),
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0)
+);     
+el5.object3D.rotation.set( // DRILL + stopdrill
+  THREE.Math.degToRad(-45),
+  THREE.Math.degToRad(20),
+  THREE.Math.degToRad(0)
+);
+    
+})
+//===============================================
+// BOTAO -
+  document.querySelector("button3").addEventListener("click", (e)=>{
+  
+  console.log("-")
+  
+  //seleção dos objetos pegando pela id    
+  var el = document.querySelector("#bancada");
+  var el2 = document.querySelector("#aviao01");
+  var el3 = document.querySelector("#thumbDown");
+  var el4 = document.querySelector("#thumbUp");
+  var el5 = document.querySelector("#drill2");  
+
+//----------------------------------------------------------    
+    //Animação das furadeiras 
+    //(sem o drill)
+    el2.setAttribute('animation', 'property: position; dur: 3000; from: 0 0 1; to: 0 0 1; loop: true');
+    //(com o drill)
+    el5.setAttribute('animation', 'property: position; dur: 3000; from: 0 0 1; to: 0 0 1; loop: true'); 
+//-----------------------------------------------------------
+// resetando as posições    
+el.object3D.position.set(0, 0, 1);
+el2.object3D.position.set(0, 0, 1);
+el3.object3D.position.set(0, 0, 1);
+el4.object3D.position.set(0, 0, 1); 
+el5.object3D.position.set(0, 0, 1);    
+
+ //resetando tamanho
+ el.object3D.scale.set(2, 2, 2);
+ el2.object3D.scale.set(2, 2, 2);
+ el3.object3D.scale.set(2, 2, 2);
+ el4.object3D.scale.set(2, 2, 2); 
+ el5.object3D.scale.set(2, 2, 2); 
+
+//-------------------------    
+// resetando rotações    
+el.object3D.rotation.set(
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0)
+);
+el2.object3D.rotation.set(
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0)
+);
+el3.object3D.rotation.set(
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0)
+);
+el4.object3D.rotation.set(
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0)
+);  
+el5.object3D.rotation.set(
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0),
+  THREE.Math.degToRad(0)
+);            
+//------------------------- 
+})
+</script>
+
+  </body>
+</html>
+
+
+
+https://raw.githubusercontent.com/KurtRodrigues/AR--teste/master/Hangar-03.gltf
