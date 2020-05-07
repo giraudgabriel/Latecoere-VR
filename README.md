@@ -1,7 +1,8 @@
-# Latecoare-VR
-Projeto VR para empresa Latecoare desenvolvido durante as aulas de laboratório de desenvolvimento de banco de dados 3
+# Lab3 - 3º BD
 
-# Integrantes
+Professor da Disciplina: Giuliano Bertoti 
+
+Equipe:
 - Alex Costa Pinto
 - Felipe Nicoletti Reis Mario
 - Gabriel Fernandes Giraud
