@@ -3,6 +3,6 @@
 Professor da Disciplina: Giuliano Bertoti 
 
 Equipe:
-- Alex Costa Pinto
-- Felipe Nicoletti Reis Mario
-- Gabriel Fernandes Giraud
+- Alex Costa Pinto - RA: 1460281913003
+- Felipe Nicoletti Reis Mario - RA: 1460281913016
+- Gabriel Fernandes Giraud - RA: 1460281913018
