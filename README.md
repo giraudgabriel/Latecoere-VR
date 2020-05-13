@@ -8,4 +8,4 @@ Equipe:
 - Gabriel Fernandes Giraud - RA: 1460281913018
 
 <hr>
-<a href="http://latecoarevr.glitch.me/"> Live Version </a>
+<a href="http://latecoarevr.glitch.me/"> ➡ Preview </a>
