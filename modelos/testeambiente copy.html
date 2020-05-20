@@ -1,39 +1,14 @@
 <html>
     <head>
         <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
-        <!-- <script
-            src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script> -->
+        
     </head>
 
     <body style='margin : 0px; overflow: hidden;'>
         <a-scene arjs="debugUIEnabled: false;">
-            <!-- <a-entity
-                id="ambiente"
-                position="6.5 0 0"
-                environment="preset:  starry;
-            fog: 0.610;
-            groundColor:  #1f502;
-            grid: none;
-            dressing: trees;
-            dressingColor: #162c18;
-            ground: canyon;
-            active:  true;
-            groundTexture:  walkernoise;
-            groundColor: #021a00;
-            groundColor2: #032400;
-            lightPosition: -10.9 0 -4.4"></a-entity>
-            <a-entity id="light1" light="type: ambient; intensity: 0.170;" visible="True"></a-entity> -->
-            <a-sphere
-                id="poste_1"
-                color="green"
-                position="-16.70079 3.94793 0.6035"
-                rotation="-90 0 0"
-                scale="0.1 0.1 0.1"
-                visible=""
-                light="type: spot; intensity: 2.89; angle: 59.59; distance: 10.57; shadowCameraFar: 0.5; shadowCameraFov: -0.12; shadowCameraNear: 0; shadowCameraTop: 0; shadowCameraRight: 0; shadowCameraBottom: -9.95; shadowCameraLeft: 0"
-                material=""
-                geometry=""></a-sphere>
-           
+            
+            <a-entity id="light1" light="type: ambient; intensity: 0.170;" visible="True"></a-entity>
+            
             <a-gltf-model
                 id="ambiente"
                 src="https://raw.githubusercontent.com/KurtRodrigues/AR--teste/master/Hangar-03.gltf"

@@ -1,5 +1,8 @@
 const pecas = [];
 let passo = 0;
+let passoMontagem = 0;
+let erros = 0;
+let acertos = 0;
 
 addPeca('peca1');
 addPeca('peca2');
@@ -10,6 +13,60 @@ let pecaAtual = pecas[0];
 
 function addPeca(id) {
     pecas.push(id)
+    document.getElementById(id + '-img')
+        ?.addEventListener("click", () => {
+            if (passoMontagem < pecas.length) {
+                if (pecas.indexOf(id) === passoMontagem) {
+                    const el = document.getElementById(id + '-montagem');
+                    el.object3D.visible = true;
+                    passoMontagem++;
+                    acertos++;
+                    if (acertos === pecas.length) {
+                        alert('Você construiu a porta com sucesso!');
+                        animationMario();
+                        setAproveitamento();
+                    }
+                } else {
+                    erros++;
+                }
+            }
+        });
+}
+
+function setAproveitamento() {
+    const tentativas = acertos + erros;
+    const aproveitamento = (acertos / tentativas * 100.0).toFixed(2);
+    console.log(`${erros} erros`);
+    console.log(`${acertos} acertos`);
+    console.log(`${tentativas} tentativas`);
+    console.log(`${aproveitamento} % de aproveitamento`);
+    passoMontagem = erros = acertos = 0;
+}
+
+function animationMario() {
+    pecas.forEach(peca => {
+        const attribute = {
+            id: `${peca}-montagem`,
+            property: 'rotation',
+            dur: 1000,
+            to: '0 360 0',
+            loop: 1
+        };
+        generateAttribute(attribute);
+    })
+    const alerta = document.querySelector("#alerta2");
+    setTimeout(() => {
+        alerta.object3D.visible = true;
+        alerta.setAttribute('animation', 'property: model-opacity; dur: 1000; to: 1 ;loop: 3;');;
+    }, 100);
+
+    setTimeout(() => {
+        pecas.forEach(peca => {
+            const el = document.getElementById(peca + '-montagem');
+            el.object3D.visible = false;
+        });
+        alerta.object3D.visible = false;
+    }, 3000);
 }
 
 function generateAttribute({
@@ -35,11 +92,10 @@ function generateAttribute({
 }
 
 function virarPraEsquerda() {
-    let e = document.getElementsByClassName('cPeca');
-    for (let i in e) {
-        let item = e[i]
-        item.object3D.rotation.y -= 0.9
-    }
+    pecas.forEach(peca => {
+        let e = document.getElementById(peca);
+        e.object3D.rotation.y -= 0.9
+    })
 }
 
 function virarPraDireita() {
