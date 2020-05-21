@@ -24,7 +24,7 @@ function addPeca(id) {
                     if (acertos === pecas.length) {
                         alert('Você construiu a porta com sucesso!');
                         animationMario();
-                        setAproveitamento();
+                        getAproveitamento();
                     }
                 } else {
                     erros++;
@@ -33,7 +33,7 @@ function addPeca(id) {
         });
 }
 
-function setAproveitamento() {
+function getAproveitamento() {
     const tentativas = acertos + erros;
     const aproveitamento = (acertos / tentativas * 100.0).toFixed(2);
     console.log(`${erros} erros`);
@@ -91,16 +91,16 @@ function generateAttribute({
     });
 }
 
-function virarPraEsquerda() {
+function virarPraEsquerda(args = '') {
     pecas.forEach(peca => {
-        let e = document.getElementById(peca);
+        let e = document.getElementById(peca + args);
         e.object3D.rotation.y -= 0.9
     })
 }
 
-function virarPraDireita() {
+function virarPraDireita(args = '') {
     pecas.forEach(peca => {
-        let e = document.getElementById(peca);
+        let e = document.getElementById(peca + args);
         e.object3D.rotation.y += 0.9
     })
 }
@@ -125,6 +125,17 @@ document
     .querySelector("#setaDireita")
     .addEventListener("click", () => {
         virarPraDireita();
+    });
+
+document
+    .querySelector("#setaEsquerdaMontagem")
+    .addEventListener("click", () => {
+        virarPraEsquerda('-montagem');
+    });
+document
+    .querySelector("#setaDireitaMontagem")
+    .addEventListener("click", () => {
+        virarPraDireita('-montagem');
     });
 
 function CheckMobile() {
@@ -184,16 +195,10 @@ function count() {
     passo = passo >= pecas.length
         ? pecas.length
         : passo + 1;
-    document
-        .getElementById("count")
-        .innerHTML = passo;
 };
 
 function countSub() {
     passo = passo < 0
         ? 0
         : passo - 1;
-    document
-        .getElementById("count")
-        .innerHTML = passo;
 };
