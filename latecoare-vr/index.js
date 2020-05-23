@@ -17,12 +17,12 @@ function addPeca(id) {
         ?.addEventListener("click", () => {
             if (passoMontagem < pecas.length) {
                 if (pecas.indexOf(id) === passoMontagem) {
+                    if (passoMontagem === 0) setBotoesMontagem();
                     const el = document.getElementById(id + '-montagem');
                     el.object3D.visible = true;
                     passoMontagem++;
                     acertos++;
                     if (acertos === pecas.length) {
-                        alert('Você construiu a porta com sucesso!');
                         animationMario();
                         getAproveitamento();
                     }
@@ -41,6 +41,19 @@ function getAproveitamento() {
     console.log(`${tentativas} tentativas`);
     console.log(`${aproveitamento} % de aproveitamento`);
     passoMontagem = erros = acertos = 0;
+    setBotoesMontagem(false);
+}
+
+function setBotoesMontagem(visible = true) {
+    const btnEsquerdo = document.getElementById('setaEsquerdaMontagem');
+    const btnEsquerdo2 = document.getElementById('setaEsquerdaMontagem0');
+    const btbDireito = document.getElementById('setaDireitaMontagem');
+    const btbDireito2 = document.getElementById('setaDireitaMontagem0');
+
+    btnEsquerdo.object3D.visible = visible;
+    btnEsquerdo2.object3D.visible = visible;
+    btbDireito.object3D.visible = visible;
+    btbDireito2.object3D.visible = visible;
 }
 
 function animationMario() {
@@ -66,7 +79,7 @@ function animationMario() {
             el.object3D.visible = false;
         });
         alerta.object3D.visible = false;
-    }, 3000);
+    }, 2000);
 }
 
 function generateAttribute({
