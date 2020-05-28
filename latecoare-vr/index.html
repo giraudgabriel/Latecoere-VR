@@ -2,13 +2,15 @@
     <head>
         <!-- "bibliotecas" -->
         <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
         <script
             src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
 
         <!-- referencia para chamar meus arquivos de css e js - **NO CODE PEN NÃO PRECISA DISSO** -->
         <link rel="stylesheet" href="./index.css"/>
         <!-- referenciar .css -->
-        <script src="./index.js" defer></script>
+        
         <!-- referenciar .js -->
     </head>
     <body>
@@ -253,69 +255,6 @@
                 transparent="true"
                 position="1.51 2.53 -2.56"
                 visible="false"></a-image>
-            <!-- IMAGENS SEGUNDA MOLDURA -->
-
-            <img
-                id="img1-1"
-                crossorigin=""
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p1.jpg"/>
-            <img
-                id="img2-1"
-                crossorigin=""
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p2.jpg"/>
-            <img
-                id="img3-1"
-                crossorigin=""
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p3.jpg"/>
-            <img
-                id="img4-1"
-                crossorigin=""
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p4.jpg"/>
-
-            <a-image
-                look-at="#player1"
-                id="peca1-img"
-                src="#img1-1"
-                scale="0.37 2.01 2"
-                transparent="true"
-                position="11.183 2.54 -2.54"
-                visible=""
-                width="2"
-                material=""
-                geometry=""></a-image>
-            <a-image
-                look-at="#player2"
-                id="peca2-img"
-                src="#img2-1"
-                scale="0.37 2.01 2"
-                transparent="true"
-                position="11.974 2.54 -2.54"
-                visible=""
-                width="2"
-                material=""
-                geometry=""></a-image>
-            <a-image
-                look-at="#player3"
-                id="peca3-img"
-                src="#img3-1"
-                scale="0.37 2.01 2"
-                transparent="true"
-                position="12.759 2.54 -2.54"
-                visible=""
-                width="2"
-                material=""
-                geometry=""></a-image>
-            <a-image
-                look-at="#player4"
-                id="peca4-img"
-                src="#img4-1"
-                scale="0.32 2.01 2"
-                transparent="true"
-                position="13.495 2.54 -2.54"
-                visible=""
-                width="2"
-                material=""
-                geometry=""></a-image>
             <!-- IMAGENS PISO -->
             <img
                 id="pisoImg1"
@@ -393,80 +332,7 @@
   4; dur: 1000"
                 scale="3.22 0.99 1.36"></a-gltf-model>
 
-            <!-- carregando os moedelos gltf -->
-            <a-gltf-model
-                id="peca1"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/1.2.gltf"
-                shadow="cast: true"
-                position="0 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"></a-gltf-model>
-            <!--"shadow="cast: true" habilita sombra dinamica -->
-            <a-gltf-model
-                id="peca2"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf"
-                position="0 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"
-                visible="false"
-                shadow="cast: false"></a-gltf-model>
-            <!--"shadow="cast: true" habilita sombra dinamica -->
-            <a-gltf-model
-                id="peca3"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/3.2.gltf"
-                position="0 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"
-                visible="false"
-                shadow="cast: false"></a-gltf-model>
-            <!--"shadow="cast: true" habilita sombra dinamica -->
-            <a-gltf-model
-                id="peca4"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/4.2.gltf"
-                position="0 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"
-                visible="false"
-                shadow="cast: false"></a-gltf-model>
-            <!--"shadow="cast: true" habilita sombra dinamica -->
-
-            <!-- PEÇAS PARA O TABLADO 2 -->
-
-            <a-gltf-model
-                id="peca1-montagem"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/1.2.gltf"
-                shadow="cast: false"
-                position="9.998 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"
-                visible="false"></a-gltf-model>
-            <!--"shadow="cast: true" habilita sombra dinamica -->
-            <a-gltf-model
-                id="peca2-montagem"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf"
-                position="10 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"
-                shadow="cast: false"
-                visible="false"></a-gltf-model>
-            <!--"shadow="cast: true" habilita sombra dinamica -->
-            <a-gltf-model
-                id="peca3-montagem"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/3.2.gltf"
-                position="9.992 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"
-                visible="false"
-                shadow="cast: false"></a-gltf-model>
-            <!--"shadow="cast: true" habilita sombra dinamica -->
-            <a-gltf-model
-                id="peca4-montagem"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/4.2.gltf"
-                position="10 0 0"
-                rotation="0 0 0"
-                scale="1 1 1"
-                visible="false"></a-gltf-model>
-
+              
             <!----------------------------------- -->
             <a-assets>
                 <a-asset-item
@@ -631,7 +497,7 @@
 
             <!-- SETAS DE ROTAÇÃO -->
             <!-- chamada de modelos 3d usados como botões -->
-            
+
             <a-gltf-model
                 id="setaEsquerdaMontagem"
                 src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/arrow-left.gltf"
@@ -832,4 +698,8 @@
             <!-- ========================================================================= -->
         </a-scene>
     </body>
+    <script src="./index.js" defer></script>
+    <script src="./api/api.js"></script>
+        <script src="./controllers/ObjectController.js"></script>
+
 </html>

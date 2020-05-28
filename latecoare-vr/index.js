@@ -1,36 +1,53 @@
+//controller api
+const objectController = new ObjectController();
+
+//cenario
+const scene = document.getElementsByTagName('a-scene')[0];
+const tras = document.getElementById('tras');
+const frente = document.getElementById('frente');
+const setaDireita = document.getElementById('setaDireita');
+const setaEsquerda = document.getElementById('setaEsquerda');
+const setaDireitaMontagem = document.getElementById('setaDireitaMontagem');
+const setaEsquerdaMontagem = document.getElementById('setaEsquerdaMontagem');
+
+//pecas
 const pecas = [];
+
+//passo demonstracao
 let passo = 0;
+
+//passo montagem
 let passoMontagem = 0;
+
+//contagem de erros na montagem
 let erros = 0;
+
+//contagem de acertos na montagem
 let acertos = 0;
 
-addPeca('peca1');
-addPeca('peca2');
-addPeca('peca3');
-addPeca('peca4');
-
+//peca atual demonstracao
 let pecaAtual = pecas[0];
 
-function addPeca(id) {
-    pecas.push(id)
-    document.getElementById(id + '-img')
-        ?.addEventListener("click", () => {
-            if (passoMontagem < pecas.length) {
-                if (pecas.indexOf(id) === passoMontagem) {
-                    if (passoMontagem === 0) setBotoesMontagem();
-                    const el = document.getElementById(id + '-montagem');
-                    el.object3D.visible = true;
-                    passoMontagem++;
-                    acertos++;
-                    if (acertos === pecas.length) {
-                        animationMario();
-                        getAproveitamento();
-                    }
-                } else {
-                    erros++;
-                }
-            }
-        });
+//pega da api os objetos e coloca no cenario
+async function setObjects() {
+    var pieces = [];
+    try {
+        const response = await objectController.getAll();
+        pieces = response.data[0].pieces;
+        pieces.map(piece => createPiece(piece));
+    } catch (error) {
+        fetch('./db/db.json').then(response => {
+            response
+                .json()
+                .then(data => {
+                    const {object} = data;
+                    const first = object[0];
+                    pieces = first.pieces;
+                    pieces.map(piece => createPiece(piece));
+                });
+        })
+    }
+
 }
 
 function getAproveitamento() {
@@ -118,82 +135,128 @@ function virarPraDireita(args = '') {
     })
 }
 
-document
-    .querySelector("#tras")
-    .addEventListener("click", () => {
-        generateAttribute({id: pecaAtual})
-    });
-document
-    .querySelector("#frente")
-    .addEventListener("click", () => {
-        generateAttribute({id: pecaAtual})
-    });
-
-document
-    .querySelector("#setaEsquerda")
-    .addEventListener("click", () => {
-        virarPraEsquerda();
-    });
-document
-    .querySelector("#setaDireita")
-    .addEventListener("click", () => {
-        virarPraDireita();
-    });
-
-document
-    .querySelector("#setaEsquerdaMontagem")
-    .addEventListener("click", () => {
-        virarPraEsquerda('-montagem');
-    });
-document
-    .querySelector("#setaDireitaMontagem")
-    .addEventListener("click", () => {
-        virarPraDireita('-montagem');
-    });
-
-function CheckMobile() {
-
+function checkMobile() {
+    var el = document.querySelector("#mycursor");
     if (AFRAME.utils.device.isMobile() == false) { // DESKTOP
-        var el = document.querySelector("#mycursor");
         el.setAttribute('cursor', 'rayOrigin: mouse;fuse: false');
     } else {
-        var el = document.querySelector("#mycursor"); // MOBILE
         el.setAttribute('cursor', 'rayOrigin: cursor;fuse: true');
         el.object3D.visible = true;
     }
 }
 
-document
-    .querySelector('a-scene')
-    .addEventListener('enter-vr', () => {
-        var el2 = document.querySelector("#mycursor");
-        el2.setAttribute('cursor', 'rayOrigin: cursor; fuse: true;');
-        el2.object3D.visible = true;
-        var el = document.querySelector("#CameraPosition");
-        el
-            .object3D
-            .position
-            .set(0, 0, 4.5);
-    });
-window.onload = function () {
-    CheckMobile();
-};
+function createPiece({id, src, src_img}) {
+    //peca demonstracao
+    const piece = document.createElement('a-gltf-model');
+    piece.setAttribute('id', id)
+    piece.setAttribute('src', src)
+    piece.setAttribute('shadow', 'cast: true')
+    piece.setAttribute('position', '0 0 0')
+    piece.setAttribute('rotation', '0 0 0')
+    piece.setAttribute('scale', '1 1 1')
+    piece.setAttribute('visible', false)
 
-let frente = document.getElementById("frente");
-frente.addEventListener("click", (e) => {
-    count();
-    let from = '0.6 0 1'
-    let to = '0 0 0'
-    atualizarPasso(from, to)
-})
+    //peca montagem
+    const pieceMontage = document.createElement('a-gltf-model');
+    pieceMontage.setAttribute('id', id + '-montagem')
+    pieceMontage.setAttribute('src', src)
+    pieceMontage.setAttribute('shadow', 'cast: true')
+    pieceMontage.setAttribute('position', '10.1 0 0')
+    pieceMontage.setAttribute('rotation', '0 0 0')
+    pieceMontage.setAttribute('scale', '1 1 1')
+    pieceMontage.setAttribute('visible', false)
 
-let tras = document.getElementById("tras");
-tras.addEventListener("click", (e) => {
-    let from = '0.6 0 1'
-    let to = '0.6 0 1'
-    atualizarPasso(from, to, false);
-    countSub();
-})
+    //adicionando ao cenario
+    scene.appendChild(piece);
+    scene.appendChild(pieceMontage);
+
+    //criando imagem pra clicar
+    createImg({id, src_img});
+
+    pecas.push(id);
+}
+
+function createImg({id, src_img}) {
+    const img = document.createElement('img');
+    img.setAttribute('src', src_img);
+    img.setAttribute('id', id + '-foto');
+
+    const imgAFRAME = document.createElement('a-image');
+    imgAFRAME.setAttribute('id', id + '-img');
+    imgAFRAME.setAttribute('src', img.src);
+    imgAFRAME.setAttribute('scale', '0.6 2.01 2');
+    imgAFRAME.setAttribute('position', `${ 11.183 + (pecas.length * 0.7)} 2.54 -2.54`);
+    imgAFRAME.addEventListener("click", () => onImgClick(id));
+
+    scene.appendChild(img);
+    scene.appendChild(imgAFRAME);
+}
+
+function onImgClick(id) {
+    if (passoMontagem < pecas.length) {
+        if (pecas.indexOf(id) === passoMontagem) {
+            if (passoMontagem === 0) 
+                setBotoesMontagem();
+            const el = document.getElementById(id + '-montagem');
+            el.object3D.visible = true;
+            passoMontagem++;
+            acertos++;
+            if (acertos === pecas.length) {
+                animationMario();
+                getAproveitamento();
+            }
+        } else {
+            erros++;
+        }
+    }
+}
+
+document.onreadystatechange = () => {
+    if (document.readyState === 'complete') {
+        setObjects();
+        //prosseguir passo a passo
+        frente.addEventListener("click", (e) => {
+            count();
+            let from = '0.6 0 1'
+            let to = '0 0 0'
+            atualizarPasso(from, to)
+        })
+
+        //voltar passo a passo
+        tras.addEventListener("click", (e) => {
+            let from = '0 0 0'
+            let to = '0.6 0 1'
+            atualizarPasso(from, to, false);
+            countSub();
+        })
+
+        //virar pra esquerda passo a passo
+        setaEsquerda.addEventListener("click", () => virarPraEsquerda());
+
+        //virar pra direita passo a passo
+        setaDireita.addEventListener("click", () => virarPraDireita());
+
+        //virar pra esquerda montagem
+        setaEsquerdaMontagem.addEventListener("click", () => virarPraEsquerda('-montagem'));
+
+        //virar pra direita montagem
+        setaDireitaMontagem.addEventListener("click", () => virarPraDireita('-montagem'));
+
+        //adicionar cursor
+        scene.addEventListener('enter-vr', () => {
+            var el2 = document.querySelector("#mycursor");
+            el2.setAttribute('cursor', 'rayOrigin: cursor; fuse: true;');
+            el2.object3D.visible = true;
+            var el = document.querySelector("#CameraPosition");
+            el
+                .object3D
+                .position
+                .set(0, 0, 4.5);
+        });
+    }
+}
+
+window.onload = () => checkMobile();
 
 function atualizarPasso(from, to, visible = true) {
     if (passo > 0) {
