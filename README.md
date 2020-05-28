@@ -9,3 +9,7 @@ Equipe:
 
 <hr>
 <a href="http://latecoarevr.glitch.me/"> ➡ Preview </a>
+
+# Área de treinamento da montagem das peças
+![Guia para montagem de peça](gifs/guia.gif)
+
