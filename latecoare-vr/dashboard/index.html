@@ -40,8 +40,14 @@ const App = () => {
                     <iframe src="../index.html" width="480px" height="330px" frameBorder="0"></iframe>
                 </div>
             </div>
+            <div class="row">
+                <div class="col">
                     <ListPiece setSelectedPiece={setSelectedPiece}/>
+                </div>
+                <div class="col">
                     <ListScore/>
+                </div>
+            </div>
         </div>)
 }
 
@@ -172,7 +178,7 @@ const App = () => {
             fetchData();
         }, []);
 
-        return <div className="col-lg m-3">
+        return <div className="m-3">
             <h3 className="text-center"> Ranking de Tentativas</h3>
                 <table className="table table-bordered">
                     <thead>
@@ -243,7 +249,7 @@ const App = () => {
             fetchData();
         }, []);
 
-        return <div className="col-lg m-3">
+        return <div className="m-3">
             <h3 className="text-center"> Lista de Peças</h3>
                 <table className="table table-bordered">
                     <thead>
