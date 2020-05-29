@@ -9,6 +9,7 @@
         href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     </head>
     <body>
         <div id="root"></div>
@@ -18,6 +19,8 @@
 const api = axios.create({
     baseURL:'http://localhost:3001'
 })
+const pieceController = new PieceController();
+const scoreController = new ScoreController();
 
 
 const App = () => {
@@ -34,15 +37,16 @@ const App = () => {
                     <FormPiece piece={selectedPiece}/>
                 </div>
                 <div className="col-6">
-                    <iframe src="../index.html" width="500px" height="330px" frameBorder="0"></iframe>
+                    <iframe src="../index.html" width="480px" height="330px" frameBorder="0"></iframe>
                 </div>
             </div>
                     <ListPiece setSelectedPiece={setSelectedPiece}/>
+                    <ListScore/>
         </div>)
 }
 
 
-const pieceController = new PieceController();
+
     const Input = (props) => {
         return <div className="input-group mb-3">
                     <div className="input-group-prepend">
@@ -60,10 +64,10 @@ const pieceController = new PieceController();
     }
                     
     const Menu = () => {
-        return <ul className="nav bg-light">
+        return <ul className="nav mb-3">
                     <li className="nav-item">
                         <h3 className="nav-link active" href="#">Latecoere VR</h3>
-                    </li>
+                </li>
         </ul>
     } 
 
@@ -146,15 +150,71 @@ const pieceController = new PieceController();
         
     }
     
+    const ListScore = () => {
+        const [scores, setScores] = React.useState([]);
+
+        React.useEffect(() => {
+            async function fetchData() {
+                try {
+                const {data} = await scoreController.getAll();
+                setScores(data);
+                } catch (error) {
+                    fetch('../db/db.json').then(response => {
+                        response
+                            .json()
+                            .then(data => {
+                                const {score} = data;
+                                setScores(score);
+                            });
+                    })
+                }
+            }
+            fetchData();
+        }, []);
+
+        return <div className="col-lg m-3">
+            <h3 className="text-center"> Ranking de Tentativas</h3>
+                <table className="table table-bordered">
+                    <thead>
+                            <tr className="text-center">
+                                <th>Data</th>      
+                                <th>Ordem</th>      
+                                <th>Tentativas</th>    
+                                <th>Acertos</th>    
+                                <th>Erros</th>    
+                                <th>Aproveitamento</th>      
+                            </tr>  
+                    </thead>
+                    <tbody>
+                        {scores.map(score=> (<ItemScore key={score.id} score={score}/>))}    
+                    </tbody>
+                </table>
+        </div>
+    }
+    const ItemScore = ({ score }) => {
+
+        function renderItem() {
+            return <tr>
+                <td>{new Date(score.date).toLocaleString()}</td>
+                <td>{JSON.stringify(score.ordem)}</td>
+                <td>{score.tentativas}</td>
+                <td>{score.acertos}</td>
+                <td>{score.erros}</td>
+                <td>{score.aproveitamento.toFixed(2)+'%'}</td>
+            </tr>  
+        }
+
+        return renderItem() 
+    }
 
     const ItemPiece = ({ piece, handleSelected }) => {
 
         function renderItem() {
             return <tr>
                 <td>{piece.id}</td>
-                <td><a className="btn btn-dark btn-block" href={piece.src}>Ver GLTF</a></td>
-                <td><a className="btn btn-warning btn-block" href={piece.src_img}>Ver Imagem</a></td>
-                <td><button onClick={() => handleSelected(piece)} className="btn btn-primary btn-block">Alterar</button></td>
+                <td><a className="btn btn-dark btn-block" href={piece.src}><i className="fa fa-gear"/> Visualizar GLTF</a></td>
+                <td><a className="btn btn-warning btn-block" href={piece.src_img}><i className="fa fa-image"/> Visualizar</a></td>
+                <td><button onClick={() => handleSelected(piece)} className="btn btn-primary btn-block"><i className="fa fa-edit"/>Alterar</button></td>
             </tr>  
         }
 
@@ -183,16 +243,15 @@ const pieceController = new PieceController();
             fetchData();
         }, []);
 
-        return <div className="row m-3">
+        return <div className="col-lg m-3">
             <h3 className="text-center"> Lista de Peças</h3>
-            <div className="container m-3">
-                <table className="table table-responsive table-hover">
+                <table className="table table-bordered">
                     <thead>
-                            <tr>
-                                <td>ID</td>    
-                                <td>GLTF URL</td>    
-                                <td>IMAGEM URL</td>      
-                                <td></td>      
+                            <tr className="text-center">
+                                <th>ID</th>    
+                                <th>GLTF</th>    
+                                <th>IMAGEM</th>      
+                                <th></th>      
                             </tr>  
                     </thead>
                     <tbody>
@@ -200,8 +259,8 @@ const pieceController = new PieceController();
                     </tbody>
                 </table>
         </div>
-        </div>
     }
+
 
     window.onload = () => {
         ReactDOM.render(<App />, document.querySelector('#root'));
@@ -210,6 +269,7 @@ const pieceController = new PieceController();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 <script src="../controllers/PieceController.js"></script>
+<script src="../controllers/ScoreController.js"></script>
 <script src="../models/Piece.js"></script>
 
 <script
