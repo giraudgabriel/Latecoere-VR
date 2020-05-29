@@ -48,7 +48,7 @@ async function setPieces() {
             response
                 .json()
                 .then(data => {
-                    pieces = data.pieces;
+                    pieces = data['piece'];
                     pieces.map(piece => createPiece(piece));
                 });
         })
