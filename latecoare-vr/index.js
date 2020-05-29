@@ -1,5 +1,5 @@
 //controller api
-const objectController = new ObjectController();
+const pieceController = new PieceController();
 
 //cenario
 const scene = document.getElementsByTagName('a-scene')[0];
@@ -9,7 +9,11 @@ const setaDireita = document.getElementById('setaDireita');
 const setaEsquerda = document.getElementById('setaEsquerda');
 const setaDireitaMontagem = document.getElementById('setaDireitaMontagem');
 const setaEsquerdaMontagem = document.getElementById('setaEsquerdaMontagem');
+const madeiraParedeMontagem = document.getElementById('moldura2');
+const alerta = document.getElementById('alerta');
 
+//objeto tablado
+let sizeMadeira = 0
 //pecas
 const pecas = [];
 
@@ -25,24 +29,24 @@ let erros = 0;
 //contagem de acertos na montagem
 let acertos = 0;
 
+//ordem montagem
+let ordem = [];
 //peca atual demonstracao
 let pecaAtual = pecas[0];
 
 //pega da api os objetos e coloca no cenario
-async function setObjects() {
+async function setPieces() {
     var pieces = [];
     try {
-        const response = await objectController.getAll();
-        pieces = response.data[0].pieces;
+        const response = await pieceController.getAll();
+        pieces = response.data;
         pieces.map(piece => createPiece(piece));
     } catch (error) {
         fetch('./db/db.json').then(response => {
             response
                 .json()
                 .then(data => {
-                    const {object} = data;
-                    const first = object[0];
-                    pieces = first.pieces;
+                    pieces = data.pieces;
                     pieces.map(piece => createPiece(piece));
                 });
         })
@@ -51,13 +55,9 @@ async function setObjects() {
 }
 
 function getAproveitamento() {
-    const tentativas = acertos + erros;
-    const aproveitamento = (acertos / tentativas * 100.0).toFixed(2);
-    console.log(`${erros} erros`);
-    console.log(`${acertos} acertos`);
-    console.log(`${tentativas} tentativas`);
-    console.log(`${aproveitamento} % de aproveitamento`);
+    new Score(erros, acertos, ordem);
     passoMontagem = erros = acertos = 0;
+    ordem = [];
     setBotoesMontagem(false);
 }
 
@@ -177,23 +177,32 @@ function createPiece({id, src, src_img}) {
 }
 
 function createImg({id, src_img}) {
+
+    //aumentando madeira parede
+    sizeMadeira+= 0.35
+    madeiraParedeMontagem.setAttribute('scale', `${sizeMadeira} 1 1`)
+
+    //adicionando link da img
     const img = document.createElement('img');
     img.setAttribute('src', src_img);
     img.setAttribute('id', id + '-foto');
 
+    //adicionando image ao aframe
     const imgAFRAME = document.createElement('a-image');
     imgAFRAME.setAttribute('id', id + '-img');
     imgAFRAME.setAttribute('src', img.src);
-    imgAFRAME.setAttribute('scale', '0.6 2.01 2');
-    imgAFRAME.setAttribute('position', `${ 11.183 + (pecas.length * 0.7)} 2.54 -2.54`);
+    imgAFRAME.setAttribute('scale', '1 2.01 2');
+    imgAFRAME.setAttribute('position', `${ 10.5 + (pecas.length)} 2.54 -2.54`);
     imgAFRAME.addEventListener("click", () => onImgClick(id));
 
+    //gerando codigo no html
     scene.appendChild(img);
     scene.appendChild(imgAFRAME);
 }
 
 function onImgClick(id) {
     if (passoMontagem < pecas.length) {
+        ordem.push(id)
         if (pecas.indexOf(id) === passoMontagem) {
             if (passoMontagem === 0) 
                 setBotoesMontagem();
@@ -213,7 +222,7 @@ function onImgClick(id) {
 
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
-        setObjects();
+        setPieces();
         //prosseguir passo a passo
         frente.addEventListener("click", (e) => {
             count();
