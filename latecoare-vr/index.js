@@ -265,7 +265,7 @@ document.onreadystatechange = () => {
             el
                 .object3D
                 .position
-                .set(0, 0, 4.5);
+                .set(0, 1, 3);
         });
     }
 }
