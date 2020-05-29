@@ -8,7 +8,9 @@ const frente = document.getElementById('frente');
 const setaDireita = document.getElementById('setaDireita');
 const setaEsquerda = document.getElementById('setaEsquerda');
 const setaDireitaMontagem = document.getElementById('setaDireitaMontagem');
+const setaDireitaMontagem0 = document.getElementById('setaDireitaMontagem0');
 const setaEsquerdaMontagem = document.getElementById('setaEsquerdaMontagem');
+const setaEsquerdaMontagem0 = document.getElementById('setaEsquerdaMontagem0');
 const madeiraParedeMontagem = document.getElementById('moldura2');
 const alerta = document.getElementById('alerta');
 
@@ -62,15 +64,10 @@ function getAproveitamento() {
 }
 
 function setBotoesMontagem(visible = true) {
-    const btnEsquerdo = document.getElementById('setaEsquerdaMontagem');
-    const btnEsquerdo2 = document.getElementById('setaEsquerdaMontagem0');
-    const btbDireito = document.getElementById('setaDireitaMontagem');
-    const btbDireito2 = document.getElementById('setaDireitaMontagem0');
-
-    btnEsquerdo.object3D.visible = visible;
-    btnEsquerdo2.object3D.visible = visible;
-    btbDireito.object3D.visible = visible;
-    btbDireito2.object3D.visible = visible;
+    setaEsquerdaMontagem.object3D.visible = visible;
+    setaEsquerdaMontagem0.object3D.visible = visible;
+    setaDireitaMontagem0.object3D.visible = visible;
+    setaDireitaMontagem.object3D.visible = visible;
 }
 
 function animationMario() {
@@ -80,14 +77,14 @@ function animationMario() {
             property: 'rotation',
             dur: 1000,
             to: '0 360 0',
-            loop: 1
+            loop: 0
         };
         generateAttribute(attribute);
     })
     const alerta = document.querySelector("#alerta2");
     setTimeout(() => {
         alerta.object3D.visible = true;
-        alerta.setAttribute('animation', 'property: model-opacity; dur: 1000; to: 1 ;loop: 3;');;
+        alerta.setAttribute('animation', 'property: model-opacity; dur: 1000; to: 1 ;loop: 3;');
     }, 100);
 
     setTimeout(() => {
@@ -95,6 +92,7 @@ function animationMario() {
             const el = document.getElementById(peca + '-montagem');
             el.object3D.visible = false;
         });
+        alerta.setAttribute('animation', 'property: model-opacity; dur: 1000; to: 1 ;loop: 0;')
         alerta.object3D.visible = false;
     }, 2000);
 }
@@ -193,7 +191,10 @@ function createImg({id, src_img}) {
     imgAFRAME.setAttribute('src', img.src);
     imgAFRAME.setAttribute('scale', '1 2.01 2');
     imgAFRAME.setAttribute('position', `${ 10.5 + (pecas.length)} 2.54 -2.54`);
-    imgAFRAME.addEventListener("click", () => onImgClick(id));
+    imgAFRAME.addEventListener("click", (e) => {
+        e.preventDefault();
+        onImgClick(id);
+    });
 
     //gerando codigo no html
     scene.appendChild(img);
@@ -212,7 +213,11 @@ function onImgClick(id) {
             acertos++;
             if (acertos === pecas.length) {
                 animationMario();
-                getAproveitamento();
+                setTimeout((e) => {
+                    alert('Parabéns!d')
+                    getAproveitamento();
+                    e.preventDefault();
+                }, 3000);
             }
         } else {
             erros++;
