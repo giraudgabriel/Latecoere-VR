@@ -11,9 +11,9 @@ Equipe:
 <a href="https://latecoerevr.glitch.me/"> ➡ Preview VR</a>
 
 # Área de treinamento da montagem das peças
-![Guia para montagem de peça](gifs/guia.gif)
+![Guia para montagem de peça](assets/guia.gif)
 
 <a href="https://latecoerevr.glitch.me/dashboard/index.html"> ➡ Preview Dashboard</a>
 
 # Dashboard
-![Dashboard](gifs/dashboard.png)
+![Dashboard](assets/dashboard.png)
