@@ -8,8 +8,9 @@ Equipe:
 - Gabriel Fernandes Giraud - RA: 1460281913018
 
 <hr>
-<a href="http://latecoerevr.glitch.me/"> ➡ Preview </a>
+<a href="http://latecoerevr.glitch.me/"> ➡ Preview VR</a>
 
+<a href="http://latecoerevr.glitch.me/dashboard/index.html"> ➡ Preview Dashboard</a>
 # Área de treinamento da montagem das peças
 ![Guia para montagem de peça](gifs/guia.gif)
 
