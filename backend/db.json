@@ -1,14 +1,9 @@
 {
   "piece": [
     {
-      "id": "peca2",
+      "id": "peca3",
       "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/1.2.gltf",
       "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p1.jpg"
-    },
-    {
-      "id": "peca3",
-      "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf",
-      "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p2.jpg"
     },
     {
       "id": "peca4",
@@ -127,6 +122,35 @@
       "acertos": 4,
       "date": "2020-05-29T03:51:58.640Z",
       "id": 7
+    },
+    {
+      "tentativas": 6,
+      "aproveitamento": 66.66666666666666,
+      "erros": 2,
+      "ordem": [
+        "peca3",
+        "peca3",
+        "peca4",
+        "peca4",
+        "peca5",
+        "porta"
+      ],
+      "acertos": 4,
+      "date": "2020-05-29T23:44:14.460Z",
+      "id": 8
+    },
+    {
+      "tentativas": 3,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        "peca3",
+        "peca4",
+        "peca5"
+      ],
+      "acertos": 3,
+      "date": "2020-05-29T23:54:41.023Z",
+      "id": 9
     }
   ]
 }
