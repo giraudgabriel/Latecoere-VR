@@ -1,5 +1,5 @@
 //controller api
-const pieceController = new PieceController();
+const assemblyController = new AssemblyController();
 
 //cenario
 const scene = document.getElementsByTagName('a-scene')[0];
@@ -12,12 +12,15 @@ const setaDireitaMontagem0 = document.getElementById('setaDireitaMontagem0');
 const setaEsquerdaMontagem = document.getElementById('setaEsquerdaMontagem');
 const setaEsquerdaMontagem0 = document.getElementById('setaEsquerdaMontagem0');
 const madeiraParedeMontagem = document.getElementById('moldura2');
-const alerta = document.getElementById('alerta');
+const alerta2 = document.getElementById('alerta2');
 
 //objeto tablado
 let sizeMadeira = 0
 //pecas
 const pecas = [];
+
+//pecas objs
+let pieces = [];
 
 //passo demonstracao
 let passo = 0;
@@ -38,18 +41,19 @@ let pecaAtual = pecas[0];
 
 //pega da api os objetos e coloca no cenario
 async function setPieces() {
-    var pieces = [];
     try {
-        const response = await pieceController.getAll();
-        pieces = response.data;
+        const response = await assemblyController.getAll();
+        pieces = response.data[0]['pieces'];
         pieces.map(piece => createPiece(piece));
+        aleatorizarImagens(pieces)
     } catch (error) {
         fetch('./db/db.json').then(response => {
             response
                 .json()
                 .then(data => {
-                    pieces = data['piece'];
+                    pieces = data['assembly'][0]["pieces"];
                     pieces.map(piece => createPiece(piece));
+                    aleatorizarImagens(pieces)
                 });
         })
     }
@@ -61,6 +65,7 @@ function getAproveitamento() {
     passoMontagem = erros = acertos = 0;
     ordem = [];
     setBotoesMontagem(false);
+    aleatorizarImagens(pieces);
 }
 
 function setBotoesMontagem(visible = true) {
@@ -77,23 +82,21 @@ function animationMario() {
             property: 'rotation',
             dur: 1000,
             to: '0 360 0',
-            loop: 0
+            loop: 1
         };
         generateAttribute(attribute);
     })
-    const alerta = document.querySelector("#alerta2");
     setTimeout(() => {
-        alerta.object3D.visible = true;
-        alerta.setAttribute('animation', 'property: model-opacity; dur: 1000; to: 1 ;loop: 3;');
+        // alerta2.object3D.visible = true; alerta2.setAttribute('animation', 'property:
+        // model-opacity; dur: 1000; to: 1 ;loop: 3;');
     }, 100);
-
     setTimeout(() => {
         pecas.forEach(peca => {
             const el = document.getElementById(peca + '-montagem');
             el.object3D.visible = false;
         });
-        alerta.setAttribute('animation', 'property: model-opacity; dur: 1000; to: 1 ;loop: 0;')
-        alerta.object3D.visible = false;
+        // alerta2.setAttribute('animation', 'property: model-opacity; dur: 1000; to: 1
+        // ;loop: 0;') alerta2.object3D.visible = false;
     }, 2000);
 }
 
@@ -168,61 +171,91 @@ function createPiece({id, src, src_img}) {
     scene.appendChild(piece);
     scene.appendChild(pieceMontage);
 
-    //criando imagem pra clicar
-    createImg({id, src_img});
-
     pecas.push(id);
 }
 
-function createImg({id, src_img}) {
+function sortArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
+function aleatorizarImagens(array) {
+    const sortedArray = sortArray(array);
+    sortedArray.forEach((item, index) => {
+        const {id, src_img} = item;
+        createImg({id, src_img, index})
+    })
+}
+
+function createImg({id, src_img, index}) {
+    if (index === 0) 
+        sizeMadeira = 0;
+    
     //aumentando madeira parede
-    sizeMadeira+= 0.35
+    sizeMadeira += 0.35
     madeiraParedeMontagem.setAttribute('scale', `${sizeMadeira} 1 1`)
+    alerta2.setAttribute('scale', `${sizeMadeira} 1 1`)
 
     //adicionando link da img
-    const img = document.createElement('img');
-    img.setAttribute('src', src_img);
-    img.setAttribute('id', id + '-foto');
+    const existTagImg = document.getElementById(id + '-img');
+    const img = existTagImg !== null
+        ? existTagImg
+        : document.createElement('img');
+    if (existTagImg === null) {
+        img.setAttribute('src', src_img);
+        img.setAttribute('id', id + '-foto');
+        scene.appendChild(img);
+    }
 
     //adicionando image ao aframe
-    const imgAFRAME = document.createElement('a-image');
-    imgAFRAME.setAttribute('id', id + '-img');
-    imgAFRAME.setAttribute('src', img.src);
-    imgAFRAME.setAttribute('scale', '1 2.01 2');
-    imgAFRAME.setAttribute('position', `${ 10.5 + (pecas.length)} 2.54 -2.54`);
-    imgAFRAME.addEventListener("click", (e) => {
-        e.preventDefault();
-        onImgClick(id);
-    });
+    const existImg = document.getElementById(id + '-img');
+    const imgAFRAME = existImg !== null
+        ? existImg
+        : document.createElement('a-image');
+    imgAFRAME.setAttribute('position', `${ 10.5 + (index)} 2.54 -2.54`);
+    imgAFRAME.setAttribute('color', '');
+    if (existImg === null) {
+        imgAFRAME.setAttribute('id', id + '-img');
+        imgAFRAME.setAttribute('src', img.src);
+        imgAFRAME.setAttribute('scale', '1 2.01 2');
+        imgAFRAME.addEventListener("click", (e) => {
+            e.preventDefault();
+            onImgClick(id);
+        });
+        scene.appendChild(imgAFRAME);
+    }
 
-    //gerando codigo no html
-    scene.appendChild(img);
-    scene.appendChild(imgAFRAME);
 }
 
 function onImgClick(id) {
-    if (passoMontagem < pecas.length) {
-        ordem.push(id)
-        if (pecas.indexOf(id) === passoMontagem) {
-            if (passoMontagem === 0) 
-                setBotoesMontagem();
-            const el = document.getElementById(id + '-montagem');
-            el.object3D.visible = true;
-            passoMontagem++;
-            acertos++;
-            if (acertos === pecas.length) {
-                animationMario();
-                setTimeout((e) => {
-                    alert('Parabéns!d')
-                    getAproveitamento();
-                    e.preventDefault();
-                }, 3000);
-            }
-        } else {
-            erros++;
+    ordem.push(id)
+    if (pecas.indexOf(id) === passoMontagem) {
+        setCorImagem('rgba(1, 255, 18, 0.5)', id)
+        if (passoMontagem === 0) 
+            setBotoesMontagem();
+        const el = document.getElementById(id + '-montagem');
+        el.object3D.visible = true;
+        passoMontagem++;
+        acertos++;
+        if (acertos === pecas.length) {
+            animationMario();
+            getAproveitamento();
         }
+    } else {
+        setCorImagem('rgba(255, 18, 1, 0.5)', id)
+        erros++;
     }
+}
+
+function setCorImagem(cor, id) {
+    const imgId = document.getElementById(id + '-img');
+    imgId.setAttribute('color', cor);
+    // TODO - screenshot para gera foto scene.setAttribute('screenshot', {
+    // width: 400,     height: 320 })
+    // scene.components.screenshot.getCanvas('perspective').toDataURL()
 }
 
 document.onreadystatechange = () => {
@@ -267,6 +300,7 @@ document.onreadystatechange = () => {
                 .position
                 .set(0, 1, 3);
         });
+
     }
 }
 
