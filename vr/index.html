@@ -460,7 +460,7 @@
 
             <!-- CURSOR -->
 
-            <a-entity position="0 1 3" id="CameraPosition">
+            <a-entity position="10 1 3" id="CameraPosition">
                 <!-- 0 0.5  4.5-->
                 <a-entity camera look-controls wasd-controls vr-cursor id="teste" static-body>
                     <a-entity
@@ -477,18 +477,25 @@
                         animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeInCubic; dur: 100; to: 1 1 1"></a-entity>
                 </a-entity>
             </a-entity>
-
-            <!-- <a-gltf-model
-                id="alerta"
-                src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/alerta_selecao.gltf"
-                position="10.59186 -0.0378 -2.46437"
-                rotation=""
-                scale=""
-                material="color:green"
-                visible="true"></a-gltf-model> -->
-
             <!-- SETAS DE ROTAÇÃO -->
             <!-- chamada de modelos 3d usados como botões -->
+            
+            <a-gltf-model
+                id="painelApresentacao"
+                src="https://raw.githubusercontent.com/giraudgabriel/Latecoere-VR/feature/Modelagem_3D_cen%C3%A1rio/Tv_3D/scene.gltf"
+                position="10.15 0.4 1.2"
+                rotation="-30 0 0"
+                scale="0.01 0.01 0.01"
+                visible="true">
+            </a-gltf-model>
+            <a-image
+                id="imagemPainelApresentacao"
+                position="10.15 0.41 1.2"
+                rotation="-30 0 0"
+                color="blue"
+                scale="0.55 0.315 0"
+                visible="true">
+            </a-image>
 
             <a-gltf-model
                 id="setaEsquerdaMontagem"
@@ -691,10 +698,10 @@
         </a-scene>
     </body>
     <script src="./index.js" defer></script>
-    <script src="./api/api.js"></script>
-    <script src="./services/AssemblyService.js"></script>
-    <script src="./services/ScoreService.js"></script>
-    <script src="./models/Score.js"></script>
-    <script src="./models/Piece.js"></script>
-    <script src="./models/Assembly.js"></script>
+    <script src="../api/api.js"></script>
+    <script src="../services/AssemblyService.js"></script>
+    <script src="../services/ScoreService.js"></script>
+    <script src="../models/Score.js"></script>
+    <script src="../models/Piece.js"></script>
+    <script src="../models/Assembly.js"></script>
 </html>

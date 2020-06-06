@@ -263,6 +263,8 @@ function setCorImagem(cor, id) {
 
 document.onreadystatechange = () => {
     if (document.readyState === 'complete') {
+        const user = sessionStorage.getItem('user');
+        console.log(user);
         setPieces();
         //prosseguir passo a passo
         frente.addEventListener("click", (e) => {
