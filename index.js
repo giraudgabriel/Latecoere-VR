@@ -1,5 +1,5 @@
 //controller api
-const assemblyController = new AssemblyController();
+const assemblyService = new AssemblyService();
 
 //cenario
 const scene = document.getElementsByTagName('a-scene')[0];
@@ -42,7 +42,7 @@ let pecaAtual = pecas[0];
 //pega da api os objetos e coloca no cenario
 async function setPieces() {
     try {
-        const response = await assemblyController.getAll();
+        const response = await assemblyService.getAll();
         pieces = response.data[0]['pieces'];
         pieces.map(piece => createPiece(piece));
         aleatorizarImagens(pieces)
@@ -233,7 +233,7 @@ function createImg({id, src_img, index}) {
 function onImgClick(id) {
     ordem.push(id)
     if (pecas.indexOf(id) === passoMontagem) {
-        setCorImagem('rgba(1, 255, 18, 0.5)', id)
+        setCorImagem('rgb(1, 255, 18)', id)
         if (passoMontagem === 0) 
             setBotoesMontagem();
         const el = document.getElementById(id + '-montagem');
@@ -245,7 +245,7 @@ function onImgClick(id) {
             getAproveitamento();
         }
     } else {
-        setCorImagem('rgba(255, 18, 1, 0.5)', id)
+        setCorImagem('rgb(255, 0, 0)', id)
         erros++;
     }
 }
@@ -253,8 +253,11 @@ function onImgClick(id) {
 function setCorImagem(cor, id) {
     const imgId = document.getElementById(id + '-img');
     imgId.setAttribute('color', cor);
-    // TODO - screenshot para gera foto scene.setAttribute('screenshot', {
-    // width: 400,     height: 320 })
+    setTimeout(() => {
+        imgId.setAttribute('color', '');
+    }, 2000);
+    // TODO - screenshot para gera foto scene.setAttribute('screenshot', { width:
+    // 400,     height: 320 })
     // scene.components.screenshot.getCanvas('perspective').toDataURL()
 }
 

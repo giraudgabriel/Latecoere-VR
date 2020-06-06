@@ -1,4 +1,4 @@
-const scoreController = new ScoreController();
+const scoreService = new ScoreService();
 
 class Score {
     constructor(erros, acertos, ordem){
@@ -8,6 +8,6 @@ class Score {
         this.ordem = ordem;
         this.acertos = acertos;
         this.date = new Date();
-        scoreController.add(this)
+        scoreService.add(this)
     }
 }

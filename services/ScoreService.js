@@ -1,4 +1,4 @@
-class ScoreController {
+class ScoreService {
     getById(id) {
         return api.get(`/score/${id}`);
     }

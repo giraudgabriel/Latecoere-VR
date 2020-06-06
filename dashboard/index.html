@@ -285,7 +285,7 @@ const FormAssembly = ({ assembly, handleNewAssembly, handleCleanFormAssembly}) =
                 onClick={handleDelete}
                 hidden={assembly.id == '' || assembly.id == undefined}
                 className="btn btn-danger btn-block">
-                <i class="fa fa-trash"/></button>
+                <i className="fa fa-trash"/></button>
         </div>
     </div>
 
@@ -528,8 +528,8 @@ window.onload = () => {
 
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-<script src="../controllers/AssemblyService.js"></script>
-<script src="../controllers/ScoreService.js"></script>
+<script src="../services/AssemblyService.js"></script>
+<script src="../services/ScoreService.js"></script>
 <script src="../models/Assembly.js"></script>
 <script src="../models/Piece.js"></script>
 

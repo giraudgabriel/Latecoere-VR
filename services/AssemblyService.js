@@ -1,4 +1,4 @@
-class AssemblyController {
+class AssemblyService {
     getById(id) {
         return api.get(`/assembly/${id}`);
     }

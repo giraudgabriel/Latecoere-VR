@@ -3,7 +3,8 @@
         <!-- "bibliotecas" -->
         <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
-        <script src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
+        <script
+            src="https://unpkg.com/aframe-environment-component@1.1.0/dist/aframe-environment-component.min.js"></script>
         <link rel="stylesheet" href="./index.css"/>
     </head>
     <body>
@@ -322,7 +323,6 @@
                 animation="property: model-opacity; to: 0.0; loop:4; dur: 1000"
                 scale="3.22 0.99 1.36"></a-gltf-model>
 
-              
             <!----------------------------------- -->
             <a-assets>
                 <a-asset-item
@@ -339,18 +339,18 @@
                     rotation="0 0 0"
                     scale="1 1 1"
                     visible="true"></a-asset-item>
-                    <a-asset-item
+                <a-asset-item
                     id="hangarPiso"
                     src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/hangar-PISO2.gltf"
                     scale="1 1 1"
                     visible="true"></a-asset-item>
-                    <a-asset-item
+                <a-asset-item
                     id="hangarViga"
                     src="https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/Estrutura-vigas.gltf"
                     scale="1 1 1"
                     visible="true"></a-asset-item>
-                    
-                </a-assets>
+
+            </a-assets>
             <!----------------------------------- -->
 
             <a-gltf-model src="#tablado" shadow="cast: true;" position="0 0.1 0"></a-gltf-model>
@@ -692,8 +692,8 @@
     </body>
     <script src="./index.js" defer></script>
     <script src="./api/api.js"></script>
-    <script src="./controllers/AssemblyService.js"></script>
-    <script src="./controllers/ScoreService.js"></script>
+    <script src="./services/AssemblyService.js"></script>
+    <script src="./services/ScoreService.js"></script>
     <script src="./models/Score.js"></script>
     <script src="./models/Piece.js"></script>
     <script src="./models/Assembly.js"></script>

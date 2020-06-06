@@ -1,4 +1,4 @@
-class UserController {
+class UserService {
     getById(id) {
         return api.get(`/user/${id}`);
     }

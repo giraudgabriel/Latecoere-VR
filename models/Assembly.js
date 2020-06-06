@@ -1,5 +1,5 @@
 class Assembly {
-    constructor(pieces = [Piece], name, id = assemblyController.getAll().length + 1) {
+    constructor(pieces = [Piece], name, id = assemblyService.getAll().length + 1) {
         this.id = id;
         this.name = name;
         this.pieces = pieces;
@@ -9,6 +9,6 @@ class Assembly {
         this
             .pieces
             .push(piece)
-        assemblyController.patch(this)
+        assemblyService.patch(this)
     }
 }
