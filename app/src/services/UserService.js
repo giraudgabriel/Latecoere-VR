@@ -1,3 +1,5 @@
+import api from '../api'
+
 class UserService {
     getById(id) {
         return api.get(`/user/${id}`);
@@ -15,3 +17,5 @@ class UserService {
         return api.delete(`/user/${id}`);
     }
 }
+
+export default new UserService();

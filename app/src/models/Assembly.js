@@ -1,3 +1,6 @@
+import assemblyService from '../services/AssemblyService';
+import Piece from '../models/Piece';
+
 class Assembly {
     constructor(pieces = [Piece], name, id = assemblyService.getAll().length + 1) {
         this.id = id;
@@ -12,3 +15,5 @@ class Assembly {
         assemblyService.patch(this)
     }
 }
+
+export default Assembly;

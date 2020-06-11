@@ -47,7 +47,7 @@ async function setPieces() {
         pieces.map(piece => createPiece(piece));
         aleatorizarImagens(pieces)
     } catch (error) {
-        fetch('./db/db.json').then(response => {
+        fetch('../db.json').then(response => {
             response
                 .json()
                 .then(data => {
@@ -256,9 +256,6 @@ function setCorImagem(cor, id) {
     setTimeout(() => {
         imgId.setAttribute('color', '');
     }, 2000);
-    // TODO - screenshot para gera foto scene.setAttribute('screenshot', { width:
-    // 400,     height: 320 })
-    // scene.components.screenshot.getCanvas('perspective').toDataURL()
 }
 
 document.onreadystatechange = () => {

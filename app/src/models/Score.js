@@ -1,7 +1,7 @@
-const scoreService = new ScoreService();
+import scoreService from '../services/ScoreService';
 
 class Score {
-    constructor(erros, acertos, ordem){
+    constructor(erros, acertos, ordem) {
         this.tentativas = acertos + erros;
         this.aproveitamento = (acertos / this.tentativas * 100.0);
         this.erros = erros;
@@ -11,3 +11,5 @@ class Score {
         scoreService.add(this)
     }
 }
+
+export default Score;

@@ -1,3 +1,5 @@
+import api from '../api'
+
 class AssemblyService {
     getById(id) {
         return api.get(`/assembly/${id}`);
@@ -15,3 +17,5 @@ class AssemblyService {
         return api.delete(`/assembly/${id}`);
     }
 }
+
+export default new AssemblyService();

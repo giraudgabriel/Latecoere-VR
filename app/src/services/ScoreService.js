@@ -1,3 +1,5 @@
+import api from '../api'
+
 class ScoreService {
     getById(id) {
         return api.get(`/score/${id}`);
@@ -15,3 +17,5 @@ class ScoreService {
         return api.delete(`/score/${id}`);
     }
 }
+
+export default new ScoreService();
