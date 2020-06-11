@@ -8,12 +8,12 @@ Equipe:
 - <a href="https://github.com/giraudgabriel"> Gabriel Fernandes Giraud</a> - RA: 1460281913018
 
 <hr>
-<a href="https://latecoerevr.glitch.me/"> ➡ Preview VR</a>
+<a href="https://latecoere-app.glitch.me/"> ➡ Preview VR</a>
 
 # Área de treinamento da montagem das peças
 ![Guia para montagem de peça](assets/guia.gif)
 
-<a href="https://latecoerevr.glitch.me/dashboard/index.html"> ➡ Preview Dashboard</a>
+<a href="https://latecoere-app.glitch.me/dashboard"> ➡ Preview Dashboard</a>
 
 # Dashboard
 ![Dashboard](assets/dashboard.png)
