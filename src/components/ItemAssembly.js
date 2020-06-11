@@ -1,25 +1,26 @@
-import React from 'react';
+import React from "react";
 
-const ItemAssembly = ({assembly, handleSelected}) => {
+const ItemAssembly = ({ assembly, handleSelected }) => {
+  function renderItem() {
+    return (
+      <tr>
+        <td>{assembly.id}</td>
+        <td>{assembly.name}</td>
+        <td>{assembly.pieces.length}</td>
+        <td>
+          <button
+            onClick={() => handleSelected(assembly)}
+            className="btn btn-primary btn-block"
+          >
+            <i className="fa fa-edit" />
+            Alterar
+          </button>
+        </td>
+      </tr>
+    );
+  }
 
-    function renderItem() {
-        return <tr>
-            <td>{assembly.id}</td>
-            <td>
-                {assembly.name}
-            </td>
-            <td>
-                {assembly.pieces.length}
-            </td>
-            <td>
-                <button
-                    onClick={() => handleSelected(assembly)}
-                    className="btn btn-primary btn-block"><i className="fa fa-edit"/>Alterar</button>
-            </td>
-        </tr>
-    }
-
-    return renderItem()
-}
+  return renderItem();
+};
 
 export default ItemAssembly;

@@ -1,5 +1,6 @@
 import 'aframe';
 import 'aframe-particle-system-component';
+import 'aframe-environment-component';
 import {Entity, Scene} from 'aframe-react';
 import React from 'react';
 import assemblyService from '../services/AssemblyService';
@@ -388,10 +389,7 @@ class VRScene extends React.Component {
         window.document.onreadystatechange = () => {
             if (document.readyState === "complete") {
                 this.setPieces();
-                this
-                    .state
-                    .scene
-                    .addEventListener('enter-vr', () => this.enterVR())
+                this.state.scene.exitVR();
             }
         }
         window.onload = () => {
