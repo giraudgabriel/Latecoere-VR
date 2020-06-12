@@ -5,58 +5,113 @@ import {Entity, Scene} from 'aframe-react';
 import React from 'react';
 import assemblyService from '../services/AssemblyService';
 import Score from '../models/Score';
+import Menu from './Menu';
 const AFRAME = window.AFRAME;
 
 class VRScene extends React.Component {
     state = {
-        pecas: [],
         pieces: [],
+        sortedPieces: [],
         passo: 0,
         passoMontagem: 0,
         erros: 0,
         acertos: 0,
         ordem: [],
-        pecaAtual: ''
+        user: sessionStorage.getItem('user')
     }
+    //função executada quando o componente é montado
+    componentDidMount() {
+        //registro do a frame pra melhorar qualidade do modelo
+        AFRAME.registerComponent('model-opacity', {
+            schema: {
+                default: 1.0
+            },
+            init: function () {
+                this
+                    .el
+                    .addEventListener('model-loaded', this.update.bind(this));
+            },
+            update: function () {
+                var mesh = this
+                    .el
+                    .getObject3D('mesh');
+                var data = this.data;
+                if (!mesh) {
+                    return;
+                }
+                mesh
+                    .traverse(function (node) {
+                        if (node.isMesh) {
+                            node.material.opacity = data;
+                            node.material.transparent = data < 1.0;
+                            node.material.needsUpdate = true;
+                        }
+                    });
+            }
+        });
 
+        //verificação se o componente ja carregou
+        window.document.onreadystatechange = () => {
+            if (document.readyState === "complete") {
+                this.setPieces();
+            }
+        }
+
+        //ao terminar o carregamento
+        window.onload = () => {
+            this.verificarHardware();
+        }
+
+        //verificação se existe usuario logado
+        if (!sessionStorage.getItem('user')) {}
+
+        //definição dos states dos elementos do aframe
+        this.setState({
+            ...this.state,
+            scene: document.getElementsByTagName('a-scene')[0],
+            tras: document.getElementById('tras'),
+            frente: document.getElementById('frente'),
+            setaDireita: document.getElementById('setaDireita'),
+            setaEsquerda: document.getElementById('setaEsquerda'),
+            madeiraParedeMontagem: document.getElementById('moldura2'),
+            alerta2: document.getElementById('alerta2')
+        })
+    }
     //pega da api os objetos e coloca no cenario
     async setPieces() {
         try {
+            //pega as peças da api
             const {data} = await assemblyService.getAll();
             const {pieces} = data[0];
+
+            //define no state
             this.setState({
                 ...this.state,
-                pieces
+                pieces,
+                sortedPieces: [
+                    ...this.state.sortedPieces,
+                    ...pieces
+                ]
             });
+
+            //gera cada uma no vr
             this
                 .state
                 .pieces
-                .map(piece => this.createPiece(piece));
-            this.aleatorizarImagens(this.state.pieces)
+                .map(piece => this.criarPeca(piece));
+
+            //aleatoriza as imagens
+            this.aleatorizarImagens()
         } catch (error) {
             console.error(error)
-            fetch('../db.json').then(response => {
-                response
-                    .json()
-                    .then(data => {
-                        const {pieces} = data['assembly'][0];
-                        this.setState({
-                            ...this.state,
-                            pieces
-                        });
-                        this
-                            .state
-                            .pieces
-                            .map(piece => this.createPiece(piece));
-                        this.aleatorizarImagens(this.state.pieces)
-                    });
-            })
         }
-
     }
-
+    //gerador de aproveitamento da montagem
     getAproveitamento = () => {
+        //gera novo score no banco
         new Score(this.state.erros, this.state.acertos, this.state.ordem);
+
+        //reseta o score
         this.setState({
             ...this.state,
             passoMontagem: 0,
@@ -64,44 +119,40 @@ class VRScene extends React.Component {
             acertos: 0,
             ordem: []
         });
+
+        //reseta o botao de virar na montagem
         this.setBotoesMontagem(false);
-        this.aleatorizarImagens(this.state.pieces);
-    }
 
-    setBotoesMontagem(visible = true) {
-        this.state.setaEsquerdaMontagem0.object3D.visible = visible;
-        this.state.setaEsquerdaMontagem.object3D.visible = visible;
-        this.state.setaDireitaMontagem0.object3D.visible = visible;
-        this.state.setaDireitaMontagem.object3D.visible = visible;
+        //aleatoriza novamente as imagens
+        this.aleatorizarImagens();
     }
-
-    animationMario = () => {
+    //define a animação da vitória
+    setAnimacaoMario = () => {
         this
             .state
-            .pecas
-            .forEach(peca => {
+            .pieces
+            .forEach(piece => {
                 const attribute = {
-                    id: `${peca}-montagem`,
+                    id: `${piece.id}-montagem`,
                     property: 'rotation',
                     dur: 1000,
                     to: '0 360 0',
-                    loop: 1
+                    loop: 0
                 };
-                this.generateAttribute(attribute);
+                this.gerarAnimacao(attribute);
             })
 
         setTimeout(() => {
             this
                 .state
-                .pecas
-                .forEach(peca => {
-                    const el = document.getElementById(peca + '-montagem');
-                    el.object3D.visible = false;
+                .pieces
+                .forEach(piece => {
+                    this.setVisible(piece.id + '-montagem', false)
                 });
         }, 2000);
     }
-
-    generateAttribute({
+    //função generica pra animação de movimentação das peças
+    gerarAnimacao({
         id,
         property = 'position',
         dur = 1000,
@@ -122,28 +173,34 @@ class VRScene extends React.Component {
             elasticity
         });
     }
-
+    //função que vira todas peças de um id + args a esquerda
     virarPraEsquerda(args = '') {
         this
             .state
-            .pecas
-            .forEach(peca => {
-                let e = document.getElementById(peca + args);
-                e.object3D.rotation.y -= 0.9
+            .pieces
+            .forEach(piece => {
+                document
+                    .getElementById(piece.id + args)
+                    .object3D
+                    .rotation
+                    .y -= 0.9
             })
     }
-
+    //função que vira todas peças de um id + args a direita
     virarPraDireita(args = '') {
         this
             .state
-            .pecas
-            .forEach(peca => {
-                let e = document.getElementById(peca + args);
-                e.object3D.rotation.y += 0.9
+            .pieces
+            .forEach(piece => {
+                document
+                    .getElementById(piece.id + args)
+                    .object3D
+                    .rotation
+                    .y += 0.9
             })
     }
-
-    checkMobile = () => {
+    //função para verificação se o vr está no desktop ou celular
+    verificarHardware = () => {
         let el = document.querySelector("#rig");
         if (AFRAME.utils.device.isMobile() === false) { // DESKTOP
             el.setAttribute('cursor', 'rayOrigin: mouse;fuse: false');
@@ -152,8 +209,8 @@ class VRScene extends React.Component {
             el.object3D.visible = true;
         }
     }
-
-    createPiece({id, src}) {
+    //função para criação da peça no componente
+    criarPeca({id, src}) {
         //peca demonstracao
         const piece = document.createElement('a-gltf-model');
         piece.setAttribute('id', id)
@@ -183,30 +240,9 @@ class VRScene extends React.Component {
             .state
             .scene
             .appendChild(pieceMontage);
-
-        this
-            .state
-            .pecas
-            .push(id);
     }
-
-    sortArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-    }
-
-    aleatorizarImagens(array) {
-        const sortedArray = this.sortArray(array);
-        sortedArray.forEach((item, index) => {
-            const {id, src_img} = item;
-            this.createImg({id, src_img, index})
-        })
-    }
-
-    createImg({id, src_img, index}) {
+    //#region  Criação das imagens na parede
+    criarImagem({id, src_img, index}) {
         //adicionando link da img
         const existTagImg = document.getElementById(id + '-img');
         const img = existTagImg !== null
@@ -243,36 +279,93 @@ class VRScene extends React.Component {
         }
 
     }
-
+    //função para sort de um array
+    sortArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+    //função para aleatorizar ordem das peças na parede
+    aleatorizarImagens() {
+        this.setState({
+            ...this.state,
+            sortedPieces: this.sortArray(this.state.sortedPieces)
+        });
+        this
+            .state
+            .sortedPieces
+            .forEach((item, index) => {
+                const {id, src_img} = item;
+                this.criarImagem({id, src_img, index})
+            })
+    }
+    //função para ativar evento de clique na imagem da área de montagem
     onImgClick(id) {
         this
             .state
             .ordem
             .push(id)
-        if (this.state.pecas.indexOf(id) === this.state.passoMontagem) {
-            this.setCorImagem('rgb(1, 255, 18)', id)
-            if (this.state.passoMontagem === 0) 
-                this.setBotoesMontagem();
-            const el = document.getElementById(id + '-montagem');
-            el.object3D.visible = true;
-            this.setState({
-                ...this.state,
-                passoMontagem: this.state.passoMontagem + 1,
-                acertos: this.state.acertos + 1
-            });
-            if (this.state.acertos === this.state.pecas.length) {
-                this.animationMario();
-                this.getAproveitamento();
-            }
+        if (this.indexOfPieces(id) === this.state.passoMontagem) {
+            this.setMontagemCorreta(id);
         } else {
-            this.setCorImagem('rgb(255, 0, 0)', id)
-            this.setState({
-                ...this.state,
-                erros: this.state.erros + 1
-            })
+            this.setMontagemIncorreta(id);
         }
     }
+    //#endregion função para alterar a visibilidade de um elemento vr
+    setVisible(id, visible = true) {
+        document
+            .getElementById(id)
+            .object3D
+            .visible = visible;
+    }
+    //define a visibilidade dos botoes da area de montagem
+    setBotoesMontagem(visible = true) {
+        this.setVisible('setaEsquerdaMontagem0', visible);
+        this.setVisible('setaEsquerdaMontagem', visible);
+        this.setVisible('setaDireitaMontagem0', visible);
+        this.setVisible('setaDireitaMontagem', visible);
+    }
+    //função para quando acertar a montagem da peça
+    setMontagemCorreta(id) {
+        //se o passo da montagem for 0 torna vísivel o botão de virar
+        if (this.state.passoMontagem === 0) 
+            this.setBotoesMontagem();
+        
+        //define a cor da imagem como verde por 2s
+        this.setCorImagem('rgb(1, 255, 18)', id)
 
+        //torna a imagem visivel
+        this.setVisible(id + '-montagem');
+
+        //atualizar estado do passo da montagem e acertos
+        this.setState({
+            ...this.state,
+            passoMontagem: this.state.passoMontagem + 1,
+            acertos: this.state.acertos + 1
+        });
+
+        //se a montagem terminar
+        if (this.state.acertos === this.state.sortedPieces.length) {
+            //animação da vitoria
+            this.setAnimacaoMario();
+            //gerador de score
+            this.getAproveitamento();
+        }
+    }
+    //função para quando acertar a montagem da peça
+    setMontagemIncorreta(id) {
+        //gera a cor vermelha na imagem
+        this.setCorImagem('rgb(255, 0, 0)', id)
+
+        //atualiza o estado de erros
+        this.setState({
+            ...this.state,
+            erros: this.state.erros + 1
+        })
+    }
+    //função para definira cor de uma a-image pelo id
     setCorImagem(cor, id) {
         const imgId = document.getElementById(id + '-img');
         imgId.setAttribute('color', cor);
@@ -281,168 +374,76 @@ class VRScene extends React.Component {
         }, 2000);
     }
 
+    //função indexOf para encontrar o indice de uma peça de id tal
+    indexOfPieces(id) {
+        return this
+            .state
+            .pieces
+            .findIndex(piece => {
+                return piece.id === id;
+            })
+    }
+
+    //função para otimizar quando entrar no modo VR
+    enterVR = () => {
+        document.querySelector("#mycursor").setAttribute('cursor', 'rayOrigin: cursor; fuse: true;');
+        this.setVisible('mycursor');
+        this.setVisible("piso_1")
+        this.setVisible("piso0")
+        this.setVisible("piso_11")
+        this.setVisible("piso01")
+        this.setVisible("piso1")
+        this.setVisible("piso11")
+        this.setVisible("piso2")
+        this.setVisible("piso21")
+        this.setVisible("pisoImagem1")
+        this.setVisible("pisoImagem2")
+        this.setVisible("pisoImagem3")
+        this.setVisible("pisoImagem4")
+        this.setVisible("piso_luz1")
+    }
+    //#region Treinamento de peças Função para atualizar passo do treinamento
+    atualizarPasso(from, to, visible = true) {
+        if (this.state.passo > 0) {
+            const {id} = this.state.pieces[this.state.passo - 1];
+            this.gerarAnimacao({id, from, to})
+            this.setVisible(id, visible)
+        }
+    }
+
+    //proximo passo no treinamento
     setProximoPasso = () => {
-        this.count();
+        this.setState({
+            ...this.state,
+            passo: this.state.passo >= this.state.pieces.length
+                ? this.state.pieces.length
+                : this.state.passo + 1
+        })
         let from = '0.6 0 1'
         let to = '0 0 0'
         this.atualizarPasso(from, to)
     }
 
+    //ultimo passo no treinamento
     setPassoAnterior = () => {
         let from = '0 0 0'
         let to = '0.6 0 1'
         this.atualizarPasso(from, to, false);
-        this.countSub();
-    }
-
-    enterVR = () => {
-        let cursor = document.querySelector("#mycursor");
-        cursor.setAttribute('cursor', 'rayOrigin: cursor; fuse: true;');
-        cursor.object3D.visible = true;
-        document
-            .querySelector("#CameraPosition")
-            .object3D
-            .position
-            .set(0, 0, 3.5);
-        document
-            .querySelector("#piso_1")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#piso_11")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#piso0")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#piso01")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#piso1")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#piso11")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#piso2")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#piso21")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#pisoImagem1")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#pisoImagem2")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#pisoImagem3")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#pisoImagem4")
-            .object3D
-            .visible = true;
-        document
-            .querySelector("#piso_luz1")
-            .object3D
-            .visible = true;
-    }
-
-    componentDidMount() {
-        AFRAME.registerComponent('model-opacity', {
-            schema: {
-                default: 1.0
-            },
-            init: function () {
-                this
-                    .el
-                    .addEventListener('model-loaded', this.update.bind(this));
-            },
-            update: function () {
-                var mesh = this
-                    .el
-                    .getObject3D('mesh');
-                var data = this.data;
-                if (!mesh) {
-                    return;
-                }
-                mesh
-                    .traverse(function (node) {
-                        if (node.isMesh) {
-                            node.material.opacity = data;
-                            node.material.transparent = data < 1.0;
-                            node.material.needsUpdate = true;
-                        }
-                    });
-            }
-        });
-        window.document.onreadystatechange = () => {
-            if (document.readyState === "complete") {
-                this.setPieces();
-                this.state.scene.exitVR();
-            }
-        }
-        window.onload = () => {
-            this.checkMobile();
-        }
-        const user = sessionStorage.getItem('user');
-        console.log(user);
-        this.setState({
-            ...this.state,
-            scene: document.getElementsByTagName('a-scene')[0],
-            tras: document.getElementById('tras'),
-            frente: document.getElementById('frente'),
-            setaDireita: document.getElementById('setaDireita'),
-            setaEsquerda: document.getElementById('setaEsquerda'),
-            setaDireitaMontagem: document.getElementById('setaDireitaMontagem'),
-            setaDireitaMontagem0: document.getElementById('setaDireitaMontagem0'),
-            setaEsquerdaMontagem: document.getElementById('setaEsquerdaMontagem'),
-            setaEsquerdaMontagem0: document.getElementById('setaEsquerdaMontagem0'),
-            madeiraParedeMontagem: document.getElementById('moldura2'),
-            alerta2: document.getElementById('alerta2')
-        })
-    }
-
-    atualizarPasso(from, to, visible = true) {
-        if (this.state.passo > 0) {
-            const pecaAtual = this.state.pecas[this.state.passo - 1];
-            let el = document.getElementById(pecaAtual);
-            this.generateAttribute({id: pecaAtual, from, to})
-            el.object3D.visible = visible;
-        }
-    }
-
-    count = () => {
-        this.setState({
-            ...this.state,
-            passo: this.state.passo >= this.state.pecas.length
-                ? this.state.pecas.length
-                : this.state.passo + 1
-        })
-    };
-
-    countSub = () => {
         this.setState({
             ...this.state,
             passo: this.state.passo < 0
                 ? 0
                 : this.state.passo - 1
         })
-    };
+    }
+    //#endregion
 
     render() {
         return (
             <Scene shadow="type: pcf">
+                <div className="fixed-top">
+                    <Menu />
+                </div>
                 <a-entity id="rig" position="10 -0.5 3">
                     <a-camera id="camera"></a-camera>
                 </a-entity>

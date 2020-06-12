@@ -1399,6 +1399,152 @@
       "acertos": 4,
       "date": "2020-06-11T19:41:14.669Z",
       "id": 85
+    },
+    {
+      "tentativas": 5,
+      "aproveitamento": 80,
+      "erros": 1,
+      "ordem": [
+        1,
+        3,
+        1,
+        2,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T02:39:47.565Z",
+      "id": 86
+    },
+    {
+      "tentativas": 5,
+      "aproveitamento": 80,
+      "erros": 1,
+      "ordem": [
+        1,
+        3,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T02:48:40.336Z",
+      "id": 87
+    },
+    {
+      "tentativas": 5,
+      "aproveitamento": 80,
+      "erros": 1,
+      "ordem": [
+        2,
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T03:04:27.545Z",
+      "id": 88
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T03:04:33.694Z",
+      "id": 89
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T03:05:36.989Z",
+      "id": 90
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T03:05:42.349Z",
+      "id": 91
+    },
+    {
+      "tentativas": 6,
+      "aproveitamento": 66.66666666666666,
+      "erros": 2,
+      "ordem": [
+        1,
+        4,
+        3,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T03:12:02.632Z",
+      "id": 92
+    },
+    {
+      "tentativas": 5,
+      "aproveitamento": 80,
+      "erros": 1,
+      "ordem": [
+        1,
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T03:44:01.895Z",
+      "id": 93
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T03:44:06.755Z",
+      "id": 94
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-12T04:49:20.350Z",
+      "id": 95
     }
   ],
   "user": [
@@ -1406,6 +1552,12 @@
       "id": 1,
       "username": "admin",
       "password": "admin123querty0987654321",
+      "isAdmin": true
+    },
+    {
+      "id": 2,
+      "username": "giraud",
+      "password": "123",
       "isAdmin": true
     }
   ]

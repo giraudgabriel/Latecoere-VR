@@ -1,15 +1,47 @@
 import React from "react";
-
+import userService from '../services/UserService';
+import {useHistory} from "react-router-dom";
 const Menu = () => {
-  return (
-    <ul className="nav mb-3">
-      <li className="nav-item">
-        <h3 className="nav-link active" href="#">
-          Latecoere VR
-        </h3>
-      </li>
-    </ul>
-  );
+    const history = useHistory();
+    function handleLogout() {
+        if (window.confirm('Deseja realmente sair?')) {
+            userService.logout();
+            history.push('/')
+        }
+    }
+
+    return (
+        <ul className="nav mb-3 bg-light">
+            <li className="nav-item">
+                <h3 className="nav-link active" href="#">
+                    Latecoere VR
+                </h3>
+            </li>
+            <li className="nav-item mr-2" hidden={!sessionStorage.getItem('user')}>
+                <button
+                    className="btn btn-sm mt-2 btn-info"
+                    onClick={() => history.push('/dashboard')}>
+                    <i className="fa fa-edit"></i>
+                    Dashboard
+                </button>
+            </li>
+
+            <li className="nav-item mr-2" hidden={!sessionStorage.getItem('user')}>
+                <a className="btn btn-sm mt-2 btn-warning" href="/vr">
+                    <i className="fa fa-eye"></i>
+                    VR
+                </a>
+            </li>
+
+            <li className="nav-item" hidden={!sessionStorage.getItem('user')}>
+                <button className="btn btn-sm mt-2 btn-danger" onClick={handleLogout}>
+                    <i className="fa fa-sign-out"></i>
+                    Sair
+                </button>
+            </li>
+
+        </ul>
+    );
 };
 
 export default Menu;
