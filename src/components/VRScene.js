@@ -17,6 +17,7 @@ class VRScene extends React.Component {
         erros: 0,
         acertos: 0,
         ordem: [],
+        aproveitamento: 0.0,
         user: sessionStorage.getItem('user')
     }
     //função executada quando o componente é montado
@@ -110,21 +111,27 @@ class VRScene extends React.Component {
     getAproveitamento = () => {
         //gera novo score no banco
         new Score(this.state.erros, this.state.acertos, this.state.ordem);
+        setTimeout(() => {
+            const telaId = document.getElementById('imagemPainelApresentacao');
 
-        //reseta o score
-        this.setState({
-            ...this.state,
-            passoMontagem: 0,
-            erros: 0,
-            acertos: 0,
-            ordem: []
-        });
+            telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: Acertos: ${this.state.acertos}(${this.state.aproveitamento} %) \n Erros: ${this.state.erros} ; width: 3; wrapCount: 40.29; zOffset: 200`);
 
-        //reseta o botao de virar na montagem
-        this.setBotoesMontagem(false);
+            //reseta o score
+            this.setState({
+                ...this.state,
+                passoMontagem: 0,
+                erros: 0,
+                acertos: 0,
+                ordem: [],
+                aproveitamento: 0.0
+            });
 
-        //aleatoriza novamente as imagens
-        this.aleatorizarImagens();
+            //reseta o botao de virar na montagem
+            this.setBotoesMontagem(false);
+
+            //aleatoriza novamente as imagens
+            this.aleatorizarImagens();
+        }, 3000)
     }
     //define a animação da vitória
     setAnimacaoMario = () => {
@@ -307,8 +314,13 @@ class VRScene extends React.Component {
             .state
             .ordem
             .push(id)
+        document
+            .getElementById('imagemPainelApresentacao')
+            .setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: ; width: 3; wrapCount: 40.29; zOffset: 200`);
+
         if (this.indexOfPieces(id) === this.state.passoMontagem) {
             this.setMontagemCorreta(id);
+
         } else {
             this.setMontagemIncorreta(id);
         }
@@ -334,7 +346,7 @@ class VRScene extends React.Component {
             this.setBotoesMontagem();
         
         //define a cor da imagem como verde por 2s
-        this.setCorImagem('rgb(1, 255, 18)', id)
+        this.setCorImagem('rgb(0, 180, 0)', id, `${window.location.origin}/assets/check.gif`, `${window.location.origin}/assets/check.mp3`)
 
         //torna a imagem visivel
         this.setVisible(id + '-montagem');
@@ -343,7 +355,8 @@ class VRScene extends React.Component {
         this.setState({
             ...this.state,
             passoMontagem: this.state.passoMontagem + 1,
-            acertos: this.state.acertos + 1
+            acertos: this.state.acertos + 1,
+            aproveitamento: ((this.state.acertos / (this.state.acertos + this.state.erros)) * 100).toFixed(0)
         });
 
         //se a montagem terminar
@@ -357,20 +370,31 @@ class VRScene extends React.Component {
     //função para quando acertar a montagem da peça
     setMontagemIncorreta(id) {
         //gera a cor vermelha na imagem
-        this.setCorImagem('rgb(255, 0, 0)', id)
+        this.setCorImagem('rgb(255, 0, 0)', id, `${window.location.origin}/assets/errou-faustao.gif`, `${window.location.origin}/assets/errou-faustao.mp3`)
 
         //atualiza o estado de erros
         this.setState({
             ...this.state,
-            erros: this.state.erros + 1
+            erros: this.state.erros + 1,
+            aproveitamento: ((this.state.acertos / (this.state.acertos + this.state.erros)) * 100).toFixed(0)
         })
     }
     //função para definira cor de uma a-image pelo id
-    setCorImagem(cor, id) {
+    setCorImagem(cor, id, src, song) {
         const imgId = document.getElementById(id + '-img');
+        const telaId = document.getElementById('imagemPainelApresentacao');
+        const somId = document.getElementById('som');
         imgId.setAttribute('color', cor);
+        telaId.setAttribute('color', '')
+        telaId.setAttribute('src', src)
+        somId.setAttribute('src', `src: url(${song})`)
+
         setTimeout(() => {
+            somId.setAttribute('src', ``)
             imgId.setAttribute('color', '');
+            telaId.setAttribute('color', 'blue');
+            telaId.setAttribute('src', '')
+            telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: ${ ((this.state.acertos / this.state.pieces.length) * 100).toFixed(0)} % concluído ; width: 3; wrapCount: 40.29; zOffset: 200`);
         }, 2000);
     }
 
@@ -386,7 +410,9 @@ class VRScene extends React.Component {
 
     //função para otimizar quando entrar no modo VR
     enterVR = () => {
-        document.querySelector("#mycursor").setAttribute('cursor', 'rayOrigin: cursor; fuse: true;');
+        document
+            .querySelector("#mycursor")
+            .setAttribute('cursor', 'rayOrigin: cursor; fuse: true;');
         this.setVisible('mycursor');
         this.setVisible("piso_1")
         this.setVisible("piso0")
@@ -442,11 +468,12 @@ class VRScene extends React.Component {
         return (
             <Scene shadow="type: pcf">
                 <div className="fixed-top">
-                    <Menu />
+                    <Menu/>
                 </div>
                 <a-entity id="rig" position="10 -0.5 3">
                     <a-camera id="camera"></a-camera>
                 </a-entity>
+                <a-sound id="som" autoplay="true" position="10 -0.5 3"></a-sound>
                 <Entity
                     primitive='a-entity'
                     id="ambiente"
@@ -923,15 +950,15 @@ class VRScene extends React.Component {
                     rotation="-30 0 0"
                     scale="0.01 0.01 0.01"
                     visible="true"/>
-                <Entity
-                    primitive='a-image'
+                <a-image
                     id="imagemPainelApresentacao"
                     position="10.15 0.41 1.2"
-                    rotation="-30 0 0"
+                    rotation="-29.999999999999996 0 0"
                     color="blue"
-                    scale="0.55 0.315 0"
-                    visible="true"/>
-
+                    scale="0.55 0.315 0.00001"
+                    visible=""
+                    material=""
+                    geometry=""/>
                 <Entity
                     primitive='a-gltf-model'
                     id="setaEsquerdaMontagem"
