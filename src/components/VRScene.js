@@ -3,9 +3,9 @@ import 'aframe-particle-system-component';
 import 'aframe-environment-component';
 import {Entity, Scene} from 'aframe-react';
 import React from 'react';
-import assemblyService from '../services/AssemblyService';
 import Score from '../models/Score';
 import Menu from './Menu';
+import {withRouter} from 'react-router-dom';
 const AFRAME = window.AFRAME;
 
 class VRScene extends React.Component {
@@ -18,91 +18,103 @@ class VRScene extends React.Component {
         acertos: 0,
         ordem: [],
         aproveitamento: 0.0,
-        user: sessionStorage.getItem('user')
+        user: JSON.parse(sessionStorage.getItem('user')),
+        assemblie: JSON.parse(sessionStorage.getItem('assemblie'))
     }
     //função executada quando o componente é montado
     componentDidMount() {
-        //registro do a frame pra melhorar qualidade do modelo
-        AFRAME.registerComponent('model-opacity', {
-            schema: {
-                default: 1.0
-            },
-            init: function () {
-                this
-                    .el
-                    .addEventListener('model-loaded', this.update.bind(this));
-            },
-            update: function () {
-                var mesh = this
-                    .el
-                    .getObject3D('mesh');
-                var data = this.data;
-                if (!mesh) {
-                    return;
-                }
-                mesh
-                    .traverse(function (node) {
-                        if (node.isMesh) {
-                            node.material.opacity = data;
-                            node.material.transparent = data < 1.0;
-                            node.material.needsUpdate = true;
-                        }
-                    });
-            }
-        });
-
-        //verificação se o componente ja carregou
-        window.document.onreadystatechange = () => {
-            if (document.readyState === "complete") {
-                this.setPieces();
-            }
-        }
-
-        //ao terminar o carregamento
-        window.onload = () => {
-            this.verificarHardware();
-        }
-
         //verificação se existe usuario logado
-        if (!sessionStorage.getItem('user')) {}
+        if (!sessionStorage.getItem('user') || !sessionStorage.getItem('assemblie')) {
+            this
+                .props
+                .history
+                .push('/');
+        } else {
+            //registro do a frame pra melhorar qualidade do modelo
+            AFRAME.registerComponent('model-opacity', {
+                schema: {
+                    default: 1.0
+                },
+                init: function () {
+                    this
+                        .el
+                        .addEventListener('model-loaded', this.update.bind(this));
+                },
+                update: function () {
+                    var mesh = this
+                        .el
+                        .getObject3D('mesh');
+                    var data = this.data;
+                    if (!mesh) {
+                        return;
+                    }
+                    mesh
+                        .traverse(function (node) {
+                            if (node.isMesh) {
+                                node.material.opacity = data;
+                                node.material.transparent = data < 1.0;
+                                node.material.needsUpdate = true;
+                            }
+                        });
+                }
+            });
 
-        //definição dos states dos elementos do aframe
-        this.setState({
-            ...this.state,
-            scene: document.getElementsByTagName('a-scene')[0],
-            tras: document.getElementById('tras'),
-            frente: document.getElementById('frente'),
-            setaDireita: document.getElementById('setaDireita'),
-            setaEsquerda: document.getElementById('setaEsquerda'),
-            madeiraParedeMontagem: document.getElementById('moldura2'),
-            alerta2: document.getElementById('alerta2')
-        })
+            //verificação se o componente ja carregou
+            window.document.onreadystatechange = () => {
+                if (document.readyState === "complete") {
+                    this.setPieces();
+                }
+            }
+
+            //definição dos states dos elementos do aframe
+            this.setState({
+                ...this.state,
+                scene: document.getElementsByTagName('a-scene')[0],
+                tras: document.getElementById('tras'),
+                frente: document.getElementById('frente'),
+                setaDireita: document.getElementById('setaDireita'),
+                setaEsquerda: document.getElementById('setaEsquerda'),
+                madeiraParedeMontagem: document.getElementById('moldura2'),
+                alerta2: document.getElementById('alerta2')
+            })
+            //ao terminar o carregamento
+            window.onload = () => {
+                this.verificarHardware();
+            }
+        }
+
     }
     //pega da api os objetos e coloca no cenario
     async setPieces() {
         try {
             //pega as peças da api
-            const {data} = await assemblyService.getAll();
-            const {pieces} = data[0];
+            const assemblie = sessionStorage.getItem('assemblie');
 
-            //define no state
-            this.setState({
-                ...this.state,
-                pieces,
-                sortedPieces: [
-                    ...this.state.sortedPieces,
-                    ...pieces
-                ]
-            });
+            if (assemblie) {
+                const {pieces} = JSON.parse(assemblie);
 
-            //gera cada uma no vr
-            this
-                .state
-                .pieces
-                .map(piece => this.criarPeca(piece));
+                //define no state
+                this.setState({
+                    ...this.state,
+                    pieces,
+                    sortedPieces: [
+                        ...this.state.sortedPieces,
+                        ...pieces
+                    ]
+                });
 
-            //aleatoriza as imagens
-            this.aleatorizarImagens()
+                //gera cada uma no vr
+                this
+                    .state
+                    .pieces
+                    .map(piece => this.criarPeca(piece));
+
+                //aleatoriza as imagens
+                this.aleatorizarImagens()
+            } else {
+                window.location.href = "/assembly"
+            }
+
         } catch (error) {
             console.error(error)
         }
@@ -110,7 +122,8 @@ class VRScene extends React.Component {
     //gerador de aproveitamento da montagem
     getAproveitamento = () => {
         //gera novo score no banco
-        new Score(this.state.erros, this.state.acertos, this.state.ordem);
+        const {id, username} = this.state.user;
+        new Score(this.state.erros, this.state.acertos, this.state.ordem, {id, username});
         setTimeout(() => {
             const telaId = document.getElementById('imagemPainelApresentacao');
 
@@ -394,7 +407,7 @@ class VRScene extends React.Component {
             imgId.setAttribute('color', '');
             telaId.setAttribute('color', 'blue');
             telaId.setAttribute('src', '')
-            telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: ${ ((this.state.acertos / this.state.pieces.length) * 100).toFixed(0)} % concluído ; width: 3; wrapCount: 40.29; zOffset: 200`);
+            telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: ${ ((this.state.acertos / this.state.pieces.length) * 100).toFixed(0)} % concluido ; width: 3; wrapCount: 40.29; zOffset: 200`);
         }, 2000);
     }
 
@@ -1183,4 +1196,4 @@ class VRScene extends React.Component {
     }
 }
 
-export default VRScene;
+export default withRouter(VRScene);

@@ -17,7 +17,7 @@ const Login = () => {
         if (user && user.isAdmin) {
             history.push('/dashboard')
         } else if (user && !user.isAdmin) {
-            history.push('/vr')
+            history.push('/assembly')
         }
     }, [history, user])
 

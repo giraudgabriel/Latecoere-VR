@@ -12,9 +12,12 @@ class UserService {
             .get(`/user?username=${username}&password=${password}&_page=1&_limit=1`)
             .then(response => {
                 if (response.data) {
-                    const user = response.data[0];
-                    sessionStorage.setItem('user', JSON.stringify(user));
-                    return user;
+                    if(response.data.length === 1){
+                        const user = response.data[0];
+                        sessionStorage.setItem('user', JSON.stringify(user));
+                        return user;
+                    }
+                    return null;
                 } else {
                     alert('Usuário não encontrado!')
                     return null;

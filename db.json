@@ -32,13 +32,19 @@
     },
     {
       "id": 2,
-      "name": "1",
+      "name": "Porta Latecoere 2",
       "pieces": [
         {
           "id": 1,
-          "src": "",
-          "src_img": "",
-          "name": ""
+          "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/1.2.gltf",
+          "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p1.jpg",
+          "name": "Peça 1"
+        },
+        {
+          "id": 2,
+          "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf",
+          "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p2.jpg",
+          "name": "Peça 2"
         }
       ]
     }
@@ -1772,6 +1778,110 @@
       "acertos": 4,
       "date": "2020-06-18T02:07:07.173Z",
       "id": 109
+    },
+    {
+      "tentativas": 1,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1
+      ],
+      "acertos": 1,
+      "date": "2020-06-20T01:38:01.375Z",
+      "id": 110
+    },
+    {
+      "tentativas": 5,
+      "aproveitamento": 80,
+      "erros": 1,
+      "ordem": [
+        4,
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-20T01:38:31.384Z",
+      "id": 111
+    },
+    {
+      "tentativas": 6,
+      "aproveitamento": 66.66666666666666,
+      "erros": 2,
+      "ordem": [
+        1,
+        3,
+        4,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-20T01:43:31.230Z",
+      "user": {
+        "id": 2,
+        "username": "giraud",
+        "password": "123",
+        "isAdmin": true
+      },
+      "id": 112
+    },
+    {
+      "tentativas": 7,
+      "aproveitamento": 57.14285714285714,
+      "erros": 3,
+      "ordem": [
+        2,
+        1,
+        3,
+        2,
+        4,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-20T01:43:41.419Z",
+      "user": {
+        "id": 2,
+        "username": "giraud",
+        "password": "123",
+        "isAdmin": true
+      },
+      "id": 113
+    },
+    {
+      "tentativas": 1,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1
+      ],
+      "acertos": 1,
+      "date": "2020-06-20T01:53:18.747Z",
+      "user": {
+        "id": 2,
+        "username": "giraud"
+      },
+      "id": 114
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-20T02:01:47.399Z",
+      "user": {
+        "id": 2,
+        "username": "giraud"
+      },
+      "id": 115
     }
   ],
   "user": [
@@ -1786,6 +1896,12 @@
       "username": "giraud",
       "password": "123",
       "isAdmin": true
+    },
+    {
+      "id": 3,
+      "username": "treino",
+      "password": "123",
+      "isAdmin": false
     }
   ]
 }
