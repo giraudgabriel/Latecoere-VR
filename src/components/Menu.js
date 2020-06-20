@@ -8,7 +8,7 @@ const Menu = () => {
 
     React.useEffect(() => {
         setUser(JSON.parse(sessionStorage.getItem('user')));
-    }, [user])
+    }, [])
 
     function handleLogout() {
         if (window.confirm('Deseja realmente sair?')) {
@@ -35,10 +35,12 @@ const Menu = () => {
             </li>
 
             <li className="nav-item mr-2" hidden={!user}>
-                <a className="btn btn-sm mt-2 btn-warning" href="/assembly">
+                <button
+                    className="btn btn-sm mt-2 btn-warning"
+                    onClick={() => history.push('/assembly')}>
                     <i className="fa fa-wrench"></i>
                     Montagens
-                </a>
+                </button>
             </li>
 
             <li className="nav-item" hidden={!user}>
