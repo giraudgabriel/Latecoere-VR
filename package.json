@@ -21,6 +21,7 @@
     "concurrently": "^5.0.2",
     "http-proxy-middleware": "^1.0.0"
   },
+  "proxy": "http://localhost:3001",
   "scripts": {
     "start": "npm run development",
     "development": "concurrently --kill-others \"npm run client\" \"npm run server\"",
