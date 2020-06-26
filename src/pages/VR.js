@@ -24,7 +24,7 @@ class VR extends React.Component {
     //função executada quando o componente é montado
     componentDidMount() {
         //verificação se existe usuario logado
-        if (!sessionStorage.getItem('user') || !sessionStorage.getItem('assemblie')) {
+        if (!sessionStorage.getItem('assemblie')) {
             this
                 .props
                 .history

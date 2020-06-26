@@ -224,6 +224,24 @@
         "username": "giraud"
       },
       "id": 122
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-26T18:33:00.580Z",
+      "user": {
+        "id": 5,
+        "username": "giraud"
+      },
+      "id": 123
     }
   ],
   "user": [
@@ -233,20 +251,6 @@
       "password": "123",
       "isAdmin": true,
       "id": 5
-    },
-    {
-      "username": "teste",
-      "name": "Teste da Silva",
-      "password": "teste",
-      "isAdmin": false,
-      "id": 6
-    },
-    {
-      "username": "nicoletti",
-      "name": "Felipe Nicoletti Reis Mario",
-      "password": "123",
-      "isAdmin": true,
-      "id": 7
     }
   ]
 }
