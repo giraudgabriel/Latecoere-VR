@@ -21,6 +21,12 @@
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/3.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p3.jpg",
           "name": "Peça 3"
+        },
+        {
+          "id": 4,
+          "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/4.2.gltf",
+          "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p4.jpg",
+          "name": "Peça 4"
         }
       ]
     },
@@ -39,6 +45,12 @@
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p2.jpg",
           "name": "Peça 2"
+        },
+        {
+          "id": 3,
+          "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/3.2.gltf",
+          "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p3.jpg",
+          "name": "Peça 3"
         }
       ]
     }
@@ -235,13 +247,6 @@
       "password": "123",
       "isAdmin": true,
       "id": 7
-    },
-    {
-      "username": "alex",
-      "name": "Alex Costa Pinto",
-      "password": "123",
-      "isAdmin": true,
-      "id": 8
     }
   ]
 }
