@@ -2,7 +2,7 @@ import React from "react";
 import assemblyService from "../services/AssemblyService";
 import ItemAssembly from "./ItemAssembly";
 
-const ListAssembly = ({ setSelectedAssembly, lastAssemblyInserted }) => {
+const ListAssembly = ({ setSelectedAssembly }) => {
   const [assemblies, setAssemblies] = React.useState([]);
 
   React.useEffect(() => {
@@ -20,12 +20,6 @@ const ListAssembly = ({ setSelectedAssembly, lastAssemblyInserted }) => {
       }
     }
     fetchData();
-    // if (lastAssemblyInserted) {
-    //     setAssemblies([
-    //         ...assemblies,
-    //         lastAssemblyInserted
-    //     ])
-    // }
   }, []);
 
   function renderAssemblies() {
@@ -49,8 +43,10 @@ const ListAssembly = ({ setSelectedAssembly, lastAssemblyInserted }) => {
   }
 
   return (
-    <div className="m-3">
-      <h3 className="text-center">Lista de Montagens</h3>
+    <div className="card">
+      <div className="card-header">
+      <h1>Lista de Montagens</h1>
+      </div>
       <table className="table table-bordered">
         <thead>
           <tr className="text-center">

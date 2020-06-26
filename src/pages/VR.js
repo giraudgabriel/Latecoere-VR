@@ -4,11 +4,11 @@ import 'aframe-environment-component';
 import {Entity, Scene} from 'aframe-react';
 import React from 'react';
 import Score from '../models/Score';
-import Menu from './Menu';
+import Menu from '../components/Menu';
 import {withRouter} from 'react-router-dom';
 const AFRAME = window.AFRAME;
 
-class VRScene extends React.Component {
+class VR extends React.Component {
     state = {
         pieces: [],
         sortedPieces: [],
@@ -1196,4 +1196,4 @@ class VRScene extends React.Component {
     }
 }
 
-export default withRouter(VRScene);
+export default withRouter(VR);

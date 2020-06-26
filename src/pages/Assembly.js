@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import Menu from './Menu'
+import Menu from '../components/Menu'
 import assemblyService from '../services/AssemblyService'
 class Assembly extends Component {
     state = {
@@ -23,7 +23,7 @@ class Assembly extends Component {
 
     handleJoinVR(assemblie) {
         sessionStorage.setItem('assemblie', JSON.stringify(assemblie));
-        window.location.href="/vr";
+        window.location.href = "/vr";
     }
     renderAssemblies() {
         return this
@@ -31,7 +31,7 @@ class Assembly extends Component {
             .assemblies
             .map(assemblie => (
                 <div key={assemblie.id} className="col-lg-3">
-                    <div className="card">
+                    <div className="card m-3">
                         <div className="card-body">
                             <h5 className="card-title">{assemblie.name}</h5>
                             <button
@@ -50,10 +50,14 @@ class Assembly extends Component {
         return (
             <div>
                 <Menu/>
-                <div className="m-5">
-                    <h1 className="mb-5">Lista de Montagens</h1>
-                    <div className="row">
-                        {this.renderAssemblies()}
+                <div className="container">
+                    <div className="card">
+                        <div className="card-header">
+                            <h1 className="mb-5">Lista de Montagens</h1>
+                        </div>
+                        <div className="row">
+                            {this.renderAssemblies()}
+                        </div>
                     </div>
                 </div>
             </div>

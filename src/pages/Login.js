@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import userService from '../services/UserService';
-import Input from './Input';
-import Menu from './Menu';
+import Input from '../components/Input';
+import Menu from '../components/Menu';
 
 const Login = () => {
     const [username,
@@ -24,14 +24,15 @@ const Login = () => {
     async function handleSubmit(e) {
         e.preventDefault();
         if (username !== null && password !== null) {
-            setUser(await userService.login(username, password));
+            setUser(await userService.login(username.trim(), password));
         }
     }
 
     return (
         <div>
             <Menu/>
-            <div className="container">
+            <div className="container" style={{ paddingLeft: '10%', paddingRight:'10%'}}>
+                <h3 className="text-center">Autenticação</h3>
                 <form className="form-group" onSubmit={handleSubmit}>
                     <Input
                         label="Usuário"

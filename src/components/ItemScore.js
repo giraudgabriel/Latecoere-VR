@@ -1,10 +1,13 @@
 import React from "react";
 
 const ItemScore = ({ score }) => {
+  const user = JSON.parse(sessionStorage.getItem('user'));
+
   function renderItem() {
     return (
-      <tr>
+      <tr className={user.username === score.user.username ? 'alert-success' : ''}>
         <td>{new Date(score.date).toLocaleString()}</td>
+        <td>{score.user.username}</td>
         <td>{JSON.stringify(score.ordem)}</td>
         <td>{score.tentativas}</td>
         <td>{score.acertos}</td>
