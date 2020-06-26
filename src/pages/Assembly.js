@@ -26,24 +26,32 @@ class Assembly extends Component {
         window.location.href = "/vr";
     }
     renderAssemblies() {
-        return this
-            .state
-            .assemblies
-            .map(assemblie => (
-                <div key={assemblie.id} className="col-lg-3">
-                    <div className="card m-3">
-                        <div className="card-body">
-                            <h5 className="card-title">{assemblie.name}</h5>
-                            <button
-                                onClick={() => this.handleJoinVR(assemblie)}
-                                className="btn btn-primary btn-block">
-                                <i className="fa fa-eye"/>
-                                Entrar no VR
-                            </button>
+        if (this.state.assemblies.length > 0) {
+            return this
+                .state
+                .assemblies
+                .map(assemblie => (
+                    <div key={assemblie.id} className="col-lg-3">
+                        <div className="card m-3">
+                            <div className="card-body">
+                                <h5 className="card-title">{assemblie.name}</h5>
+                                <button
+                                    onClick={() => this.handleJoinVR(assemblie)}
+                                    className="btn btn-primary btn-block">
+                                    <i className="fa fa-eye"/>
+                                    Entrar no VR
+                                </button>
+                            </div>
                         </div>
                     </div>
+                ))
+        } else {
+            return (
+                <div className="alert alert-warning m-5">
+                    Nenhuma montagem encontrada
                 </div>
-            ))
+            )
+        }
     }
 
     render() {

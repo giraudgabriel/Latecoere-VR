@@ -31,7 +31,7 @@ const ListScore = () => {
         } else {
             return (
                 <tr className="alert alert-warning">
-                    <td colSpan="6" className="text-center">
+                    <td colSpan="7" className="text-center">
                         Nenhuma tentativa encontrada
                     </td>
                 </tr>

@@ -48,6 +48,44 @@ class Users extends Component {
         this.getUsers();
     }
 
+    renderUsers() {
+        if (this.state.users.length === 0) {
+            return (
+                <tr className="alert alert-warning">
+                    <td colSpan="7" className="text-center">
+                        Nenhum usuário encontrado
+                    </td>
+                </tr>
+            );
+        } else {
+            return this
+                .state
+                .users
+                .map(user => (
+                    <tr key={user.id} className="text-left">
+                        <td>{user.username}</td>
+                        <td>{user.name}</td>
+                        <td>
+                            <button
+                                className={user.isAdmin
+                                ? 'btn btn-success btn-sm '
+                                : 'btn btn-danger btn-sm'}
+                                onClick={(e) => this.updateUser(e, user)}><i
+                                className={user.isAdmin
+                        ? 'fa fa-check-circle'
+                        : 'fa fa-times-circle'}/>
+                            </button>
+                        </td>
+                        <td>
+                            <button className="btn btn-sm btn-danger" onClick={() => this.deleteUser(user)}>
+                                <i className="fa fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                ))
+        }
+    }
+
     render() {
         return (
             <div>
@@ -67,31 +105,7 @@ class Users extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {this
-                                    .state
-                                    .users
-                                    .map(user => (
-                                        <tr key={user.id} className="text-left">
-                                            <td>{user.username}</td>
-                                            <td>{user.name}</td>
-                                            <td>
-                                                <button
-                                                    className={user.isAdmin
-                                                    ? 'btn btn-success btn-sm '
-                                                    : 'btn btn-danger btn-sm'}
-                                                    onClick={(e) => this.updateUser(e, user)}><i
-                                                    className={user.isAdmin
-                                            ? 'fa fa-check-circle'
-                                            : 'fa fa-times-circle'}/>
-                                                </button>
-                                            </td>
-                                            <td>
-                                                <button className="btn btn-sm btn-danger" onClick={() => this.deleteUser(user)}>
-                                                    <i className="fa fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    ))}
+                                {this.renderUsers()}
                             </tbody>
                         </table>
                     </div>
