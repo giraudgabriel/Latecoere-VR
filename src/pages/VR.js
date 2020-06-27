@@ -19,12 +19,12 @@ class VR extends React.Component {
         ordem: [],
         aproveitamento: 0.0,
         user: JSON.parse(sessionStorage.getItem('user')),
-        assemblie: JSON.parse(sessionStorage.getItem('assemblie'))
+        assembly: JSON.parse(sessionStorage.getItem('assembly'))
     }
     //função executada quando o componente é montado
     componentDidMount() {
         //verificação se existe usuario logado
-        if (!sessionStorage.getItem('assemblie')) {
+        if (!sessionStorage.getItem('assembly')) {
             this
                 .props
                 .history
@@ -88,10 +88,10 @@ class VR extends React.Component {
     async setPieces() {
         try {
             //pega as peças da api
-            const assemblie = sessionStorage.getItem('assemblie');
+            const assembly = sessionStorage.getItem('assembly');
 
-            if (assemblie) {
-                const {pieces} = JSON.parse(assemblie);
+            if (assembly) {
+                const {pieces} = JSON.parse(assembly);
 
                 //define no state
                 this.setState({
@@ -123,7 +123,7 @@ class VR extends React.Component {
     getAproveitamento = () => {
         //gera novo score no banco
         const {id, username} = this.state.user;
-        new Score(this.state.erros, this.state.acertos, this.state.ordem, {id, username});
+        new Score(this.state.erros, this.state.acertos, this.state.ordem, {id, username}, this.state.assembly);
         setTimeout(() => {
             const telaId = document.getElementById('imagemPainelApresentacao');
             if (telaId) {

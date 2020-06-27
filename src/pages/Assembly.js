@@ -21,8 +21,8 @@ class Assembly extends Component {
         await this.getAssemblies();
     }
 
-    handleJoinVR(assemblie) {
-        sessionStorage.setItem('assemblie', JSON.stringify(assemblie));
+    handleJoinVR(assembly) {
+        sessionStorage.setItem('assembly', JSON.stringify(assembly));
         window.location.href = "/vr";
     }
     renderAssemblies() {
@@ -30,13 +30,13 @@ class Assembly extends Component {
             return this
                 .state
                 .assemblies
-                .map(assemblie => (
-                    <div key={assemblie.id} className="col-lg-3">
+                .map(assembly => (
+                    <div key={assembly.id} className="col-lg-3">
                         <div className="card m-3">
                             <div className="card-body">
-                                <h5 className="card-title">{assemblie.name}</h5>
+                                <h5 className="card-title">{assembly.name}</h5>
                                 <button
-                                    onClick={() => this.handleJoinVR(assemblie)}
+                                    onClick={() => this.handleJoinVR(assembly)}
                                     className="btn btn-primary btn-block">
                                     <i className="fa fa-eye"/>
                                     Entrar no VR

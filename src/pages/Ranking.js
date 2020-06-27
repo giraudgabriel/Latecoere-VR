@@ -8,7 +8,9 @@ class Ranking extends Component {
             <div>
                 <Menu/>
                 <div className="container">
-                    <ListScore/>
+                    <div>
+                        <ListScore/>
+                    </div>
                 </div>
             </div>
         )

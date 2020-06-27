@@ -55,6 +55,7 @@ const ListScore = () => {
                             <th>Acertos</th>
                             <th>Erros</th>
                             <th>Aproveitamento</th>
+                            <th>Montagem</th>
                         </tr>
                     </thead>
                     <tbody>{renderScores()}</tbody>

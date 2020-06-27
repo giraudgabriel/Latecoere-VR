@@ -13,6 +13,7 @@ const ItemScore = ({ score }) => {
         <td>{score.acertos}</td>
         <td>{score.erros}</td>
         <td>{score.aproveitamento.toFixed(2) + "%"}</td>
+        <td>{score?.assembly?.name}</td>
       </tr>
     );
   }
