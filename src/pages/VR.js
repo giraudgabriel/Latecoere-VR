@@ -491,7 +491,7 @@ class VR extends React.Component {
             let to = `${ (parseFloat(positionX) - 10).toFixed(2)} ${positionY} ${positionZ}`
             this.atualizarPasso(from, to)
         }
-a    }
+    }
 
     //ultimo passo no treinamento
     setPassoAnterior = () => {
