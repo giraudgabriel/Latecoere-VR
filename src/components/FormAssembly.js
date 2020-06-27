@@ -108,7 +108,7 @@ const FormAssembly = ({assembly, handleNewAssembly, handleCleanFormAssembly}) =>
         } else {
             return (
                 <tr className="alert alert-warning">
-                    <td colSpan="5" className="text-center">
+                    <td colSpan="8" className="text-center">
                         Nenhuma peça inserida ainda
                     </td>
                 </tr>
@@ -148,6 +148,9 @@ const FormAssembly = ({assembly, handleNewAssembly, handleCleanFormAssembly}) =>
                             <th>Nome</th>
                             <th>GLTF</th>
                             <th>IMAGEM</th>
+                            <th>POSIÇÃO X</th>
+                            <th>POSIÇÃO Y</th>
+                            <th>POSIÇÃO Z</th>
                             <td>
                                 <button onClick={handleNewPiece} className="btn btn-success text-white">
                                     <i className="fa fa-plus"></i>

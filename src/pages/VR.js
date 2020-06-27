@@ -126,24 +126,43 @@ class VR extends React.Component {
         new Score(this.state.erros, this.state.acertos, this.state.ordem, {id, username});
         setTimeout(() => {
             const telaId = document.getElementById('imagemPainelApresentacao');
+            if (telaId) {
+                telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: Acertos: ${this.state.acertos}(${this.state.aproveitamento} %) \n Erros: ${this.state.erros} ; width: 3; wrapCount: 40.29; zOffset: 200`);
 
-            telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: Acertos: ${this.state.acertos}(${this.state.aproveitamento} %) \n Erros: ${this.state.erros} ; width: 3; wrapCount: 40.29; zOffset: 200`);
+                //reseta o score
+                this.setState({
+                    ...this.state,
+                    passoMontagem: 0,
+                    erros: 0,
+                    acertos: 0,
+                    ordem: [],
+                    aproveitamento: 0.0
+                });
 
-            //reseta o score
-            this.setState({
-                ...this.state,
-                passoMontagem: 0,
-                erros: 0,
-                acertos: 0,
-                ordem: [],
-                aproveitamento: 0.0
-            });
+                //reseta o botao de virar na montagem
+                this.setBotoesMontagem(false);
 
-            //reseta o botao de virar na montagem
-            this.setBotoesMontagem(false);
+                //aleatoriza novamente as imagens
+                this.aleatorizarImagens();
+                telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: Acertos: ${this.state.acertos}(${this.state.aproveitamento} %) \n Erros: ${this.state.erros} ; width: 3; wrapCount: 40.29; zOffset: 200`);
 
-            //aleatoriza novamente as imagens
-            this.aleatorizarImagens();
+                //reseta o score
+                this.setState({
+                    ...this.state,
+                    passoMontagem: 0,
+                    erros: 0,
+                    acertos: 0,
+                    ordem: [],
+                    aproveitamento: 0.0
+                });
+
+                //reseta o botao de virar na montagem
+                this.setBotoesMontagem(false);
+
+                //aleatoriza novamente as imagens
+                this.aleatorizarImagens();
+            }
+
         }, 3000)
     }
     //define a animação da vitória
@@ -230,13 +249,19 @@ class VR extends React.Component {
         }
     }
     //função para criação da peça no componente
-    criarPeca({id, src}) {
+    criarPeca({
+        id,
+        src,
+        positionX = '10.1',
+        positionY = '0',
+        positionZ = '0'
+    }) {
         //peca demonstracao
         const piece = document.createElement('a-gltf-model');
         piece.setAttribute('id', id)
         piece.setAttribute('src', src)
         piece.setAttribute('shadow', 'cast: true')
-        piece.setAttribute('position', '0 0 0')
+        piece.setAttribute('position', `${ (parseFloat(positionX) - 10).toFixed(2)} ${positionY} ${positionZ}`)
         piece.setAttribute('rotation', '0 0 0')
         piece.setAttribute('scale', '1 1 1')
         piece.setAttribute('visible', false)
@@ -246,7 +271,7 @@ class VR extends React.Component {
         pieceMontage.setAttribute('id', id + '-montagem')
         pieceMontage.setAttribute('src', src)
         pieceMontage.setAttribute('shadow', 'cast: true')
-        pieceMontage.setAttribute('position', '10.1 0 0')
+        pieceMontage.setAttribute('position', `${positionX} ${positionY} ${positionZ}`)
         pieceMontage.setAttribute('rotation', '0 0 0')
         pieceMontage.setAttribute('scale', '1 1 1')
         pieceMontage.setAttribute('visible', false)
@@ -403,11 +428,13 @@ class VR extends React.Component {
         somId.setAttribute('src', `src: url(${song})`)
 
         setTimeout(() => {
-            somId.setAttribute('src', ``)
-            imgId.setAttribute('color', '');
-            telaId.setAttribute('color', 'blue');
-            telaId.setAttribute('src', '')
-            telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: ${ ((this.state.acertos / this.state.pieces.length) * 100).toFixed(0)} % concluido ; width: 3; wrapCount: 40.29; zOffset: 200`);
+            if (somId && imgId && telaId) {
+                somId.setAttribute('src', ``)
+                imgId.setAttribute('color', '');
+                telaId.setAttribute('color', 'blue');
+                telaId.setAttribute('src', '')
+                telaId.setAttribute('text__imagemPainelApresentacao', `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: ${ ((this.state.acertos / this.state.pieces.length) * 100).toFixed(0)} % concluido ; width: 3; wrapCount: 40.29; zOffset: 200`);
+            }
         }, 2000);
     }
 
@@ -458,16 +485,22 @@ class VR extends React.Component {
                 ? this.state.pieces.length
                 : this.state.passo + 1
         })
-        let from = '0.6 0 1'
-        let to = '0 0 0'
-        this.atualizarPasso(from, to)
-    }
+        if (this.state.passo > 0) {
+            const {positionX, positionY, positionZ} = this.state.pieces[this.state.passo - 1];
+            let from = `${ (parseFloat(positionX) - 9.4).toFixed(2)} ${positionY} ${positionZ}`
+            let to = `${ (parseFloat(positionX) - 10).toFixed(2)} ${positionY} ${positionZ}`
+            this.atualizarPasso(from, to)
+        }
+a    }
 
     //ultimo passo no treinamento
     setPassoAnterior = () => {
-        let from = '0 0 0'
-        let to = '0.6 0 1'
-        this.atualizarPasso(from, to, false);
+        if (this.state.passo > 0) {
+            const {positionX, positionY, positionZ} = this.state.pieces[this.state.passo - 1];
+            let from = `${ (parseFloat(positionX) - 10).toFixed(2)} ${positionY} ${positionZ}`
+            let to = `${ (parseFloat(positionX) - 9.4).toFixed(2)} ${positionY} ${positionZ}`
+            this.atualizarPasso(from, to, false);
+        }
         this.setState({
             ...this.state,
             passo: this.state.passo < 0

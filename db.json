@@ -8,25 +8,37 @@
           "id": 1,
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/1.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p1.jpg",
-          "name": "Peça 1"
+          "name": "Peça 1",
+          "positionX": "10.1",
+          "positionY": "0",
+          "positionZ": "0"
         },
         {
           "id": 2,
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p2.jpg",
-          "name": "Peça 2"
+          "name": "Peça 2",
+          "positionX": "10.1",
+          "positionY": "0",
+          "positionZ": "0"
         },
         {
           "id": 3,
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/3.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p3.jpg",
-          "name": "Peça 3"
+          "name": "Peça 3",
+          "positionX": "10.1",
+          "positionY": "0",
+          "positionZ": "0"
         },
         {
           "id": 4,
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/4.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p4.jpg",
-          "name": "Peça 4"
+          "name": "Peça 4",
+          "positionX": "10.1",
+          "positionY": "0",
+          "positionZ": "0"
         }
       ]
     },
@@ -38,19 +50,28 @@
           "id": 1,
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/1.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p1.jpg",
-          "name": "Peça 1"
+          "name": "Peça 1",
+          "positionX": "10.1",
+          "positionY": "0",
+          "positionZ": "0"
         },
         {
           "id": 2,
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p2.jpg",
-          "name": "Peça 2"
+          "name": "Peça 2",
+          "positionX": "10.1",
+          "positionY": "0",
+          "positionZ": "0"
         },
         {
           "id": 3,
           "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/3.2.gltf",
           "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p3.jpg",
-          "name": "Peça 3"
+          "name": "Peça 3",
+          "positionX": "10.1",
+          "positionY": "0",
+          "positionZ": "0"
         }
       ]
     }
@@ -88,49 +109,6 @@
         "username": "giraud"
       },
       "id": 115
-    },
-    {
-      "tentativas": 9,
-      "aproveitamento": 22.22222222222222,
-      "erros": 7,
-      "ordem": [
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        1,
-        2
-      ],
-      "acertos": 2,
-      "date": "2020-06-20T02:19:36.749Z",
-      "user": {
-        "id": 3,
-        "username": "treino"
-      },
-      "id": 116
-    },
-    {
-      "tentativas": 5,
-      "aproveitamento": 60,
-      "erros": 2,
-      "ordem": [
-        2,
-        1,
-        3,
-        2,
-        3
-      ],
-      "acertos": 3,
-      "date": "2020-06-26T15:06:25.132Z",
-      "user": {
-        "id": 4,
-        "username": "testudo"
-      },
-      "serviceId": "api",
-      "id": 117
     },
     {
       "tentativas": 5,
@@ -242,6 +220,106 @@
         "username": "giraud"
       },
       "id": 123
+    },
+    {
+      "tentativas": 6,
+      "aproveitamento": 66.66666666666666,
+      "erros": 2,
+      "ordem": [
+        1,
+        3,
+        2,
+        4,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-27T00:47:37.659Z",
+      "user": {
+        "id": 5,
+        "username": "giraud"
+      },
+      "id": 124
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-27T00:50:04.356Z",
+      "user": {
+        "id": 5,
+        "username": "giraud"
+      },
+      "id": 125
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-27T00:53:56.195Z",
+      "user": {
+        "id": 5,
+        "username": "giraud"
+      },
+      "id": 126
+    },
+    {
+      "tentativas": 5,
+      "aproveitamento": 80,
+      "erros": 1,
+      "ordem": [
+        1,
+        2,
+        4,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-27T01:14:40.467Z",
+      "user": {
+        "id": 5,
+        "username": "giraud"
+      },
+      "id": 127
+    },
+    {
+      "tentativas": 11,
+      "aproveitamento": 36.36363636363637,
+      "erros": 7,
+      "ordem": [
+        1,
+        3,
+        4,
+        2,
+        4,
+        1,
+        4,
+        4,
+        1,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2020-06-27T01:15:19.116Z",
+      "user": {
+        "id": 5,
+        "username": "giraud"
+      },
+      "id": 128
     }
   ],
   "user": [
