@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Input from "./Input";
 import Piece from "../models/Piece";
 
@@ -11,10 +11,34 @@ const FormPiece = ({ piece, handleChangePiece, handleDelete }) => {
   const [positionZ, setPositionZ] = useState(piece.positionZ);
 
   useEffect(() => {
-    if (piece.src !== src || piece.src_img !== src_img || piece.name !== name || piece.positionX !== positionX ||  piece.positionY !== positionY ||  piece.positionZ !== positionZ) {
-      handleChangePiece(new Piece(piece.id, src, src_img, name, positionX, positionY, positionZ));
+    if (
+      piece.src !== src ||
+      piece.src_img !== src_img ||
+      piece.name !== name ||
+      piece.positionX !== positionX ||
+      piece.positionY !== positionY ||
+      piece.positionZ !== positionZ
+    ) {
+      handleChangePiece(
+        new Piece(piece.id, src, src_img, name, positionX, positionY, positionZ)
+      );
     }
-  }, [name, src, src_img, handleChangePiece, piece.id, piece.name, piece.src_img, piece.src, piece.positionX, piece.positionY, piece.positionZ, positionX, positionY, positionZ]);
+  }, [
+    name,
+    src,
+    src_img,
+    handleChangePiece,
+    piece.id,
+    piece.name,
+    piece.src_img,
+    piece.src,
+    piece.positionX,
+    piece.positionY,
+    piece.positionZ,
+    positionX,
+    positionY,
+    positionZ,
+  ]);
 
   return (
     <tr>
@@ -63,7 +87,7 @@ const FormPiece = ({ piece, handleChangePiece, handleDelete }) => {
       </td>
       <td>
         <button
-          onClick={e => handleDelete(e)}
+          onClick={(e) => handleDelete(e)}
           className="btn btn-danger btn-block"
         >
           <i className="fa fa-trash" />

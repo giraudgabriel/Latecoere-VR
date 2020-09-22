@@ -12,7 +12,7 @@ const Input = ({ label, placeholder, value, disabled, handleInput, type }) => {
         value={value}
         disabled={disabled}
         type={type}
-        onChange={e => handleInput(e.target.value)}
+        onChange={(e) => handleInput(e.target.value)}
       />
     </div>
   );
