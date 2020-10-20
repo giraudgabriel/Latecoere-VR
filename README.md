@@ -27,6 +27,7 @@ Equipe:
     npm start
 </code>
 
+
 ### Tecnologias utilizadas:
 - react.js -> frontend
 - aframe.js -> vr
