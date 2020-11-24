@@ -8,21 +8,18 @@ class UserService {
     return api.get("/user");
   }
   async login(username, password) {
-    return await api
-      .get(`/user?username=${username}&password=${password}&_page=1&_limit=1`)
-      .then((response) => {
-        if (response.data) {
-          if (response.data.length === 1) {
-            const user = response.data[0];
-            sessionStorage.setItem("user", JSON.stringify(user));
-            return user;
-          }
-          return null;
-        } else {
-          alert("Usuário não encontrado!");
-          return null;
-        }
-      });
+    const response = await api.post(`/login`, { username, password });
+    if (response.data) {
+      if (response.data.length === 1) {
+        const user = response.data[0];
+        sessionStorage.setItem("user", JSON.stringify(user));
+        return user;
+      }
+      return null;
+    } else {
+      alert("Usuário não encontrado!");
+      return null;
+    }
   }
   add(user) {
     return api.post("/user", user);
