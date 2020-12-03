@@ -164,7 +164,7 @@ class VR extends React.Component {
   setAnimacaoMario = () => {
     this.state.pieces.forEach((piece) => {
       const attribute = {
-        id: `${piece.id}-montagem`,
+        id: `${piece._id}-montagem`,
         property: "rotation",
         dur: 1000,
         to: "0 360 0",
@@ -175,7 +175,7 @@ class VR extends React.Component {
 
     setTimeout(() => {
       this.state.pieces.forEach((piece) => {
-        this.setVisible(piece.id + "-montagem", false);
+        this.setVisible(piece._id + "-montagem", false);
       });
     }, 2000);
   };
@@ -204,13 +204,13 @@ class VR extends React.Component {
   //função que vira todas peças de um id + args a esquerda
   virarPraEsquerda(args = "") {
     this.state.pieces.forEach((piece) => {
-      document.getElementById(piece.id + args).object3D.rotation.y -= 0.9;
+      document.getElementById(piece._id + args).object3D.rotation.y -= 0.9;
     });
   }
   //função que vira todas peças de um id + args a direita
   virarPraDireita(args = "") {
     this.state.pieces.forEach((piece) => {
-      document.getElementById(piece.id + args).object3D.rotation.y += 0.9;
+      document.getElementById(piece._id + args).object3D.rotation.y += 0.9;
     });
   }
   //função para verificação se o vr está no desktop ou celular
@@ -417,7 +417,7 @@ class VR extends React.Component {
   //função indexOf para encontrar o indice de uma peça de id tal
   indexOfPieces(id) {
     return this.state.pieces.findIndex((piece) => {
-      return piece.id === id;
+      return piece._id === id;
     });
   }
 

@@ -26,7 +26,7 @@ const ListAssembly = ({ setSelectedAssembly }) => {
     if (assemblies.length > 0) {
       return assemblies.map((assembly) => (
         <ItemAssembly
-          key={assembly.id}
+          key={assembly._id}
           assembly={assembly}
           handleSelected={setSelectedAssembly}
         />

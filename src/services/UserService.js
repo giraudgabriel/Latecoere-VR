@@ -2,20 +2,20 @@ import api from "../api";
 
 class UserService {
   getById(id) {
-    return api.get(`/user/${id}`);
+    return api.get(`/user?id=${id}`);
   }
   getAll() {
-    return api.get("/user");
+    return api.get("/users");
   }
   async login(username, password) {
-    const response = await api.post(`/login`, { username, password });
-    if (response.data) {
-      if (response.data.length === 1) {
-        const user = response.data[0];
-        sessionStorage.setItem("user", JSON.stringify(user));
-        return user;
-      }
-      return null;
+    const response = await api.post(
+      `/login`,
+      JSON.stringify({ username, password })
+    );
+    if (response.data && response.data.status !== 404) {
+      const user = response.data;
+      sessionStorage.setItem("user", JSON.stringify(user));
+      return user;
     } else {
       alert("Usuário não encontrado!");
       return null;
@@ -24,11 +24,11 @@ class UserService {
   add(user) {
     return api.post("/user", user);
   }
-  patch(user) {
-    return api.patch(`/user/${user.id}`, user);
+  async put(user) {
+    return await api.put(`/user`, user);
   }
-  delete(id) {
-    return api.delete(`/user/${id}`);
+  delete(_id) {
+    return api.delete(`/user`, { data: { _id } });
   }
   logout() {
     sessionStorage.removeItem("user");

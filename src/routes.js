@@ -18,7 +18,7 @@ export default function Routes() {
           path="/"
           render={() =>
             JSON.parse(sessionStorage.getItem("user")) !== null ? (
-              JSON.parse(sessionStorage.getItem("user"))?.isAdmin ? (
+              JSON.parse(sessionStorage.getItem("user"))?.admin ? (
                 <Redirect to="/dashboard" />
               ) : (
                 <Redirect to="/assembly" />
@@ -33,7 +33,7 @@ export default function Routes() {
           path="/register"
           render={() =>
             JSON.parse(sessionStorage.getItem("user")) ? (
-              JSON.parse(sessionStorage.getItem("user")).isAdmin ? (
+              JSON.parse(sessionStorage.getItem("user")).admin ? (
                 <Redirect to="/dashboard" />
               ) : (
                 <Redirect to="/assembly" />
@@ -47,7 +47,7 @@ export default function Routes() {
           exact
           path="/users"
           render={() =>
-            JSON.parse(sessionStorage.getItem("user"))?.isAdmin ? (
+            JSON.parse(sessionStorage.getItem("user"))?.admin ? (
               <Users />
             ) : (
               <Login />
@@ -58,7 +58,7 @@ export default function Routes() {
           exact
           path="/dashboard"
           render={() =>
-            JSON.parse(sessionStorage.getItem("user"))?.isAdmin ? (
+            JSON.parse(sessionStorage.getItem("user"))?.admin ? (
               <Dashboard />
             ) : (
               <Login />

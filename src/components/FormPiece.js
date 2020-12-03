@@ -20,7 +20,7 @@ const FormPiece = ({ piece, handleChangePiece, handleDelete }) => {
       piece.positionZ !== positionZ
     ) {
       handleChangePiece(
-        new Piece(piece.id, src, src_img, name, positionX, positionY, positionZ)
+        new Piece(piece._id, src, src_img, name, positionX, positionY, positionZ)
       );
     }
   }, [
@@ -28,7 +28,7 @@ const FormPiece = ({ piece, handleChangePiece, handleDelete }) => {
     src,
     src_img,
     handleChangePiece,
-    piece.id,
+    piece._id,
     piece.name,
     piece.src_img,
     piece.src,
@@ -42,7 +42,7 @@ const FormPiece = ({ piece, handleChangePiece, handleDelete }) => {
 
   return (
     <tr>
-      <td>{piece.id}</td>
+      <td>{piece._id}</td>
       <td>
         <Input
           placeholder="Nome da peça"

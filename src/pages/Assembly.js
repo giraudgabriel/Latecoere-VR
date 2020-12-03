@@ -26,7 +26,7 @@ class Assembly extends Component {
   renderAssemblies() {
     if (this.state.assemblies.length > 0) {
       return this.state.assemblies.map((assembly) => (
-        <div key={assembly.id} className="col-lg-3">
+        <div key={assembly._id} className="col-lg-3">
           <div className="card m-3">
             <div className="card-body">
               <h5 className="card-title">{assembly.name}</h5>

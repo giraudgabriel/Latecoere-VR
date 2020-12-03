@@ -33,8 +33,8 @@ const FormAssembly = ({
   async function handleSubmit(e) {
     if (name !== "" && pieces.length > 0) {
       const response =
-        assembly.id !== ""
-          ? await assemblyService.patch(new Assembly(pieces, name, assembly.id))
+        assembly._id
+          ? await assemblyService.patch(new Assembly(pieces, name, assembly._id))
           : await assemblyService.add(new Assembly(pieces, name));
       if (response.status === 201 || response.status === 200) {
         if (response.data) {
@@ -52,7 +52,7 @@ const FormAssembly = ({
 
   async function handleDelete(e) {
     if (assembly && window.confirm("Deseja realmente excluir?")) {
-      const response = await assemblyService.delete(assembly.id);
+      const response = await assemblyService.delete(assembly._id);
       if (response.status === 200) {
         alert("Montagem excluída com sucesso!");
         window.location.reload();
@@ -78,14 +78,14 @@ const FormAssembly = ({
     if (window.confirm("Deseja realmente excluir esta peça?")) {
       let oldIndex = 0;
       let newArray = pieces.filter((p, index) => {
-        if (p.id === piece.id) {
+        if (p._id === piece._id) {
           oldIndex = index;
         }
-        return p.id !== piece.id;
+        return p._id !== piece._id;
       });
       for (let index = oldIndex; index < newArray.length; index++) {
         const pieceToDecreaseId = newArray[index];
-        pieceToDecreaseId.id -= 1;
+        pieceToDecreaseId._id -= 1;
       }
       setPieces(newArray);
     }
@@ -96,7 +96,7 @@ const FormAssembly = ({
       return pieces.map((piece, index) => {
         return (
           <FormPiece
-            key={piece.id}
+            key={piece._id}
             piece={piece}
             handleChangePiece={(newPiece) => handleChangePiece(newPiece, index)}
             handleDelete={(e) => handleDeletePiece(e, piece)}
@@ -130,7 +130,7 @@ const FormAssembly = ({
         <Input
           label="ID"
           placeholder="Identificador da peça"
-          hidden={assembly.id === 0 || assembly.id === null}
+          hidden={assembly._id === 0 || assembly._id === null}
           disabled
           value={id}
           handleInput={setId}
@@ -170,7 +170,7 @@ const FormAssembly = ({
         </button>
         <button
           onClick={handleDelete}
-          hidden={assembly.id === "" || assembly.id === undefined}
+          hidden={assembly._id === "" || assembly._id === undefined}
           className="btn btn-danger btn-block"
         >
           <i className="fa fa-trash" />

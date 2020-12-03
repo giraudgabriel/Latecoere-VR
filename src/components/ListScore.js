@@ -24,7 +24,7 @@ const ListScore = () => {
 
   function renderScores() {
     if (scores.length > 0) {
-      return scores.map((score) => <ItemScore key={score.id} score={score} />);
+      return scores.map((score) => <ItemScore key={score._id} score={score} />);
     } else {
       return (
         <tr className="alert alert-warning">

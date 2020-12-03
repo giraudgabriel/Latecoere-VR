@@ -5,9 +5,9 @@ class Assembly {
   constructor(
     pieces = [Piece],
     name,
-    id = assemblyService.getAll().length + 1
+    id
   ) {
-    this.id = id;
+    this._id = id;
     this.name = name;
     this.pieces = pieces;
   }

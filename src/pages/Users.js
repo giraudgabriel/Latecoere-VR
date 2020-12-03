@@ -16,12 +16,15 @@ class Users extends Component {
     });
   }
 
-  updateUser(e, user) {
+  async updateUser(e, user) {
     e.preventDefault();
-    let users = this.state.users;
-    const index = users.findIndex((u) => u.id === user.id);
-    users[index].isAdmin = !user.isAdmin;
-    UserService.patch(users[index]);
+    let userChanged = user;
+    userChanged.admin = !userChanged.admin;
+    let users = [
+      ...this.state.users.filter((u) => u.username !== user.username),
+      userChanged,
+    ];
+    await UserService.put(userChanged);
     this.setState({
       ...this.state,
       users,
@@ -32,8 +35,8 @@ class Users extends Component {
       if (
         window.confirm(`Deseja realmente excluir o usuário ${user.username}`)
       ) {
-        await UserService.delete(user.id);
-        const users = this.state.users.filter((u) => u.id !== user.id);
+        await UserService.delete(user._id);
+        const users = this.state.users.filter((u) => u._id !== user._id);
         this.setState({
           ...this.state,
           users,
@@ -56,21 +59,19 @@ class Users extends Component {
       );
     } else {
       return this.state.users.map((user) => (
-        <tr key={user.id} className="text-left">
+        <tr key={user._id.timestamp} className="text-left">
           <td>{user.username}</td>
           <td>{user.name}</td>
           <td>
             <button
               className={
-                user.isAdmin
-                  ? "btn btn-success btn-sm "
-                  : "btn btn-danger btn-sm"
+                user.admin ? "btn btn-success btn-sm " : "btn btn-danger btn-sm"
               }
-              onClick={(e) => this.updateUser(e, user)}
+              onClick={async (e) => await this.updateUser(e, user)}
             >
               <i
                 className={
-                  user.isAdmin ? "fa fa-check-circle" : "fa fa-times-circle"
+                  user.admin ? "fa fa-check-circle" : "fa fa-times-circle"
                 }
               />
             </button>

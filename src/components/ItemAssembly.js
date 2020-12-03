@@ -4,7 +4,7 @@ const ItemAssembly = ({ assembly, handleSelected }) => {
   function renderItem() {
     return (
       <tr>
-        <td>{assembly.id}</td>
+        <td>{assembly._id}</td>
         <td>{assembly.name}</td>
         <td>{assembly.pieces.length}</td>
         <td>

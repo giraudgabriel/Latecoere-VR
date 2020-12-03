@@ -13,9 +13,9 @@ const Register = () => {
   const history = useHistory();
 
   useEffect(() => {
-    if (user && user.isAdmin) {
+    if (user && user.admin) {
       history.push("/dashboard");
-    } else if (user && !user.isAdmin) {
+    } else if (user && !user.admin) {
       history.push("/assembly");
     }
   }, [history, user]);

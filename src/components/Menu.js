@@ -53,7 +53,7 @@ const Menu = () => {
           </li>
           <li
             className="nav-item m-1 btn btn-sm btn-info"
-            hidden={!user || !user.isAdmin}
+            hidden={!user || !user.admin}
             onClick={() => history.push("/dashboard")}
           >
             <i className="fa fa-edit"></i>
@@ -79,7 +79,7 @@ const Menu = () => {
 
           <li
             className="nav-item m-1 btn btn-sm  btn-secondary"
-            hidden={!user || !user.isAdmin}
+            hidden={!user || !user.admin}
             onClick={() => history.push("/users")}
           >
             <i className="fa fa-users"></i>

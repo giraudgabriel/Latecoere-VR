@@ -11,7 +11,7 @@ class ScoreService {
     return api.post("/score", score);
   }
   patch(score) {
-    return api.patch(`/score/${score.id}`, score);
+    return api.patch(`/score/${score._id}`, score);
   }
   delete(id) {
     return api.delete(`/score/${id}`);

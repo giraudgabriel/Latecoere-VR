@@ -8,7 +8,7 @@ class Piece {
     positionY = "0",
     positionZ = "0"
   ) {
-    this.id = id;
+    this._id = id;
     this.src = src;
     this.src_img = src_img;
     this.name = name;
