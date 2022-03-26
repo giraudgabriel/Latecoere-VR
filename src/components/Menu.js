@@ -7,10 +7,6 @@ const Menu = () => {
   );
   const history = useHistory();
 
-  React.useEffect(() => {
-    setUser(JSON.parse(sessionStorage.getItem("user")));
-  }, []);
-
   function handleLogout() {
     if (window.confirm("Deseja realmente sair?")) {
       userService.logout();

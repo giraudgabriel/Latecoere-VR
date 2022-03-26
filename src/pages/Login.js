@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import userService from "../services/UserService";
 import Input from "../components/Input";
@@ -7,21 +7,29 @@ import Menu from "../components/Menu";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState(sessionStorage.getItem("user"));
+  const user = sessionStorage.getItem("user");
   const history = useHistory();
 
+  const goToRoutes = useCallback(
+    (currentUser) => {
+      if (currentUser && currentUser.isAdmin) {
+        history.push("/dashboard");
+      } else if (currentUser && !currentUser.isAdmin) {
+        history.push("/assembly");
+      }
+    },
+    [history]
+  );
+
   useEffect(() => {
-    if (user && user.isAdmin) {
-      history.push("/dashboard");
-    } else if (user && !user.isAdmin) {
-      history.push("/assembly");
-    }
-  }, [history, user]);
+    goToRoutes(user);
+  }, [goToRoutes, history, user]);
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (username !== null && password !== null) {
-      setUser(await userService.login(username.trim(), password));
+      const newUser = await userService.login(username.trim(), password);
+      goToRoutes(newUser);
     }
   }
 

@@ -4,6 +4,7 @@ import userService from "../services/UserService";
 import Input from "../components/Input";
 import Menu from "../components/Menu";
 import User from "../models/User";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -34,9 +35,9 @@ const Register = () => {
     if (validateUser()) {
       await userService.add(new User(username.trim(), name.trim(), password));
       setUser(await userService.login(username.trim(), password));
-      alert("Usuário criado com sucesso!");
+      toast("Usuário criado com sucesso!");
     } else {
-      alert("Preencha os campos vazios!");
+      toast("Preencha os campos vazios!");
     }
   }
 

@@ -138,6 +138,126 @@
         ]
       },
       "id": 129
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2022-03-26T17:34:01.970Z",
+      "user": {
+        "id": 5,
+        "username": "giraud"
+      },
+      "assembly": {
+        "id": 1,
+        "name": "Porta Latecoere",
+        "pieces": [
+          {
+            "id": 1,
+            "src": "",
+            "src_img": "",
+            "name": "",
+            "positionX": "10.1",
+            "positionY": "0",
+            "positionZ": "0"
+          },
+          {
+            "id": 2,
+            "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf",
+            "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p2.jpg",
+            "name": "Peça 2",
+            "positionX": "10.1",
+            "positionY": "0",
+            "positionZ": "0"
+          },
+          {
+            "id": 3,
+            "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/3.2.gltf",
+            "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p3.jpg",
+            "name": "Peça 3",
+            "positionX": "10.1",
+            "positionY": "0",
+            "positionZ": "0"
+          },
+          {
+            "id": 4,
+            "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/4.2.gltf",
+            "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p4.jpg",
+            "name": "Peça 4",
+            "positionX": "10.1",
+            "positionY": "0",
+            "positionZ": "0"
+          }
+        ]
+      },
+      "id": 130
+    },
+    {
+      "tentativas": 4,
+      "aproveitamento": 100,
+      "erros": 0,
+      "ordem": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "acertos": 4,
+      "date": "2022-03-26T17:34:30.749Z",
+      "user": {
+        "id": 5,
+        "username": "giraud"
+      },
+      "assembly": {
+        "id": 1,
+        "name": "Porta Latecoere",
+        "pieces": [
+          {
+            "id": 1,
+            "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/1.2.gltf",
+            "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p1.jpg",
+            "name": "Peça 1",
+            "positionX": "10.1",
+            "positionY": "0",
+            "positionZ": "0"
+          },
+          {
+            "id": 2,
+            "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/2.2.gltf",
+            "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p2.jpg",
+            "name": "Peça 2",
+            "positionX": "10.1",
+            "positionY": "0",
+            "positionZ": "0"
+          },
+          {
+            "id": 3,
+            "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/3.2.gltf",
+            "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p3.jpg",
+            "name": "Peça 3",
+            "positionX": "10.1",
+            "positionY": "0",
+            "positionZ": "0"
+          },
+          {
+            "id": 4,
+            "src": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/modelos%203D%20Porta%20avi%C3%A3o/4.2.gltf",
+            "src_img": "https://raw.githubusercontent.com/KurtRodrigues/Project01/master/Imagens%20moldura%202/p4.jpg",
+            "name": "Peça 4",
+            "positionX": "10.1",
+            "positionY": "0",
+            "positionZ": "0"
+          }
+        ]
+      },
+      "id": 131
     }
   ],
   "user": [
