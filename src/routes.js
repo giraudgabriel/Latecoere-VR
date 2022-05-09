@@ -1,5 +1,5 @@
 import React from "react";
-import {BrowserRouter, Route, Switch, Redirect} from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import VR from "./pages/VR";
 import Login from "./pages/Login";
@@ -10,62 +10,81 @@ import NotFound from "./pages/NotFound";
 import Ranking from "./pages/Ranking";
 
 export default function Routes() {
-    return (
-        <BrowserRouter>
-            <Switch>
-                <Route
-                    exact
-                    path="/"
-                    render={() => (JSON.parse(sessionStorage.getItem('user')) !== null
-                    ? JSON.parse(sessionStorage.getItem('user'))
-                        ?.isAdmin
-                            ? (<Redirect to="/dashboard"/>)
-                            : (<Redirect to="/assembly"/>)
-                        : (<Login/>))}/>
-                <Route
-                    exact
-                    path="/register"
-                    render={() => (JSON.parse(sessionStorage.getItem('user'))
-                    ? JSON.parse(sessionStorage.getItem('user')).isAdmin
-                        ? (<Redirect to="/dashboard"/>)
-                        : (<Redirect to="/assembly"/>)
-                    : (<Register/>))}/>
-                <Route
-                    exact
-                    path="/users"
-                    render={() => (JSON.parse(sessionStorage.getItem('user'))
-                    ?.isAdmin
-                        ? (<Users/>)
-                        : (<Login/>))}/>
-                <Route
-                    exact
-                    path="/dashboard"
-                    render={() => (JSON.parse(sessionStorage.getItem('user'))
-                    ?.isAdmin
-                        ? (<Dashboard/>)
-                        : (<Login/>))}/>
-                <Route
-                    exact
-                    path="/assembly"
-                    render={() => (JSON.parse(sessionStorage.getItem('user'))
-                    ? (<Assembly/>)
-                    : (<Login/>))}/>
-                <Route
-                    exact
-                    path="/vr"
-                    render={() => (JSON.parse(sessionStorage.getItem('user'))
-                    ? (<VR/>)
-                    : (<Login/>))}/>
-                <Route
-                    exact
-                    path="/ranking"
-                    render={() => (JSON.parse(sessionStorage.getItem('user'))
-                    ? (<Ranking/>)
-                    : (<Login/>))}/>
-                <Route
-                    component={NotFound}/>
+  const fallbackRender = ({
+    shouldBeLogged = null,
+    fallbackRouteLogin = "/",
+    shouldBeAdmin = null,
+    fallbackRouteAdmin = "/",
+    component = null,
+  }) => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    const isAdmin = user != null && user?.isAdmin;
+    if (shouldBeLogged && !user) {
+      return <Redirect to={fallbackRouteLogin ?? "/"} />;
+    }
 
-            </Switch>
-        </BrowserRouter>
-    );
+    if (shouldBeAdmin && fallbackRouteAdmin) {
+      if (isAdmin) return component;
+      return <Redirect to={fallbackRouteAdmin} />;
+    }
+
+    return component;
+  };
+
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={Login} />
+        <Route exact path="/register" component={Register} />
+        <Route
+          exact
+          path="/users"
+          render={() =>
+            fallbackRender({
+              component: <Users />,
+              shouldBeAdmin: true,
+            })
+          }
+        />
+        <Route
+          exact
+          path="/dashboard"
+          render={() =>
+            fallbackRender({
+              component: <Dashboard />,
+              shouldBeAdmin: true,
+            })
+          }
+        />
+        <Route
+          exact
+          path="/assembly"
+          render={() =>
+            fallbackRender({
+              component: <Assembly />,
+              shouldBeLogged: true,
+            })
+          }
+        />
+        <Route
+          exact
+          path="/vr"
+          render={() =>
+            fallbackRender({
+              component: <VR />,
+              shouldBeLogged: true,
+            })
+          }
+        />
+        <Route
+          exact
+          path="/ranking"
+          render={() =>
+            fallbackRender({ shouldBeLogged: true, component: <Ranking /> })
+          }
+        />
+        <Route component={NotFound} />
+      </Switch>
+    </BrowserRouter>
+  );
 }

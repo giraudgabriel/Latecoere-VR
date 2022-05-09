@@ -11,8 +11,8 @@ const ListAssembly = ({ setSelectedAssembly }) => {
         const { data } = await assemblyService.getAll();
         setAssemblies(data);
       } catch (error) {
-        fetch("../db.json").then(response => {
-          response.json().then(data => {
+        fetch("../db.json").then((response) => {
+          response.json().then((data) => {
             const { assembly } = data;
             setAssemblies(assembly);
           });
@@ -24,7 +24,7 @@ const ListAssembly = ({ setSelectedAssembly }) => {
 
   function renderAssemblies() {
     if (assemblies.length > 0) {
-      return assemblies.map(assembly => (
+      return assemblies.map((assembly) => (
         <ItemAssembly
           key={assembly.id}
           assembly={assembly}
@@ -45,7 +45,7 @@ const ListAssembly = ({ setSelectedAssembly }) => {
   return (
     <div className="card">
       <div className="card-header">
-      <h1>Lista de Montagens</h1>
+        <h1>Lista de Montagens</h1>
       </div>
       <table className="table table-bordered">
         <thead>

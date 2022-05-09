@@ -12,7 +12,7 @@ const ItemAssembly = ({ assembly, handleSelected }) => {
             onClick={() => handleSelected(assembly)}
             className="btn btn-primary btn-block"
           >
-            <i className="fa fa-edit" />
+            <i className="m-1 fa fa-edit" />
             Alterar
           </button>
         </td>
