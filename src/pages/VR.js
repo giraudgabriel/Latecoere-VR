@@ -137,26 +137,6 @@ class VR extends React.Component {
 
         //aleatoriza novamente as imagens
         this.aleatorizarImagens();
-        telaId.setAttribute(
-          "text__imagemPainelApresentacao",
-          `align: center; alphaTest: 0.62; height: 1.5; letterSpacing: -0.24; lineHeight: 45.59; value: Acertos: ${this.state.acertos}(${this.state.aproveitamento} %) \n Erros: ${this.state.erros} ; width: 3; wrapCount: 40.29; zOffset: 200`
-        );
-
-        //reseta o score
-        this.setState({
-          ...this.state,
-          passoMontagem: 0,
-          erros: 0,
-          acertos: 0,
-          ordem: [],
-          aproveitamento: 0.0,
-        });
-
-        //reseta o botao de virar na montagem
-        this.setBotoesMontagem(false);
-
-        //aleatoriza novamente as imagens
-        this.aleatorizarImagens();
       }
     }, 3000);
   };
