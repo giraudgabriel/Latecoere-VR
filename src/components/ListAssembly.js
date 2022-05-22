@@ -22,7 +22,7 @@ const ListAssembly = ({ setSelectedAssembly }) => {
     fetchData();
   }, []);
 
-  function renderAssemblies() {
+  const renderAssemblies = React.useMemo(() => {
     if (assemblies.length > 0) {
       return assemblies.map((assembly) => (
         <ItemAssembly
@@ -40,7 +40,7 @@ const ListAssembly = ({ setSelectedAssembly }) => {
         </tr>
       );
     }
-  }
+  }, [assemblies, setSelectedAssembly]);
 
   return (
     <div className="card">
@@ -56,7 +56,7 @@ const ListAssembly = ({ setSelectedAssembly }) => {
             <th></th>
           </tr>
         </thead>
-        <tbody>{renderAssemblies()}</tbody>
+        <tbody>{renderAssemblies}</tbody>
       </table>
     </div>
   );

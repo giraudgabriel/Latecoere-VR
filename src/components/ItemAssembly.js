@@ -1,7 +1,7 @@
 import React from "react";
 
 const ItemAssembly = ({ assembly, handleSelected }) => {
-  function renderItem() {
+  const renderItem = React.useMemo(() => {
     return (
       <tr>
         <td>{assembly.id}</td>
@@ -15,12 +15,12 @@ const ItemAssembly = ({ assembly, handleSelected }) => {
             <i className="m-1 fa fa-edit" />
             Alterar
           </button>
-        </td>
+        </td> 
       </tr>
     );
-  }
+  }, [assembly, handleSelected]);
 
-  return renderItem();
+  return renderItem;
 };
 
 export default ItemAssembly;

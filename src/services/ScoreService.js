@@ -4,8 +4,12 @@ class ScoreService {
   getById(id) {
     return api.get(`/score/${id}`);
   }
-  getAll() {
-    return api.get("/score");
+  getAll(userId = null) {
+    let route = "/score";
+    if(userId != null) {
+      route += `?user.id=${userId}`
+    }
+    return api.get(route);
   }
   add(score) {
     return api.post("/score", score);

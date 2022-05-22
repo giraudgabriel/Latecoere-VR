@@ -3,7 +3,7 @@ import React from "react";
 const ItemScore = ({ score }) => {
   const user = JSON.parse(sessionStorage.getItem("user"));
 
-  function renderItem() {
+  const renderItem = React.useMemo(() => {
     return (
       <tr
         className={user.username === score.user.username ? "alert-success" : ""}
@@ -18,9 +18,9 @@ const ItemScore = ({ score }) => {
         <td>{score?.assembly?.name}</td>
       </tr>
     );
-  }
+  }, [score, user.username]);
 
-  return renderItem();
+  return renderItem;
 };
 
 export default ItemScore;
