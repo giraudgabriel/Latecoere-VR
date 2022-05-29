@@ -1,4 +1,5 @@
 import api from "../api";
+import { toast } from "react-toastify";
 
 class UserService {
   getById(id) {
@@ -19,7 +20,7 @@ class UserService {
           }
           return null;
         } else {
-          alert("Usuário não encontrado!");
+          toast.error("Usuário não encontrado!");
           return null;
         }
       });

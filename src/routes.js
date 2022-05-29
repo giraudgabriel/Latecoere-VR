@@ -1,4 +1,6 @@
 import React from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import VR from "./pages/VR";
@@ -32,59 +34,70 @@ export default function Routes() {
   };
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Login} />
-        <Route exact path="/register" component={Register} />
-        <Route
-          exact
-          path="/users"
-          render={() =>
-            fallbackRender({
-              component: <Users />,
-              shouldBeAdmin: true,
-            })
-          }
-        />
-        <Route
-          exact
-          path="/dashboard"
-          render={() =>
-            fallbackRender({
-              component: <Dashboard />,
-              shouldBeAdmin: true,
-            })
-          }
-        />
-        <Route
-          exact
-          path="/assembly"
-          render={() =>
-            fallbackRender({
-              component: <Assembly />,
-              shouldBeLogged: true,
-            })
-          }
-        />
-        <Route
-          exact
-          path="/vr"
-          render={() =>
-            fallbackRender({
-              component: <VR />,
-              shouldBeLogged: true,
-            })
-          }
-        />
-        <Route
-          exact
-          path="/ranking"
-          render={() =>
-            fallbackRender({ shouldBeLogged: true, component: <Ranking /> })
-          }
-        />
-        <Route component={NotFound} />
-      </Switch>
-    </BrowserRouter>
+    <>
+      {" "}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+      />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <Route
+            exact
+            path="/users"
+            render={() =>
+              fallbackRender({
+                component: <Users />,
+                shouldBeAdmin: true,
+              })
+            }
+          />
+          <Route
+            exact
+            path="/dashboard"
+            render={() =>
+              fallbackRender({
+                component: <Dashboard />,
+                shouldBeAdmin: true,
+              })
+            }
+          />
+          <Route
+            exact
+            path="/assembly"
+            render={() =>
+              fallbackRender({
+                component: <Assembly />,
+                shouldBeLogged: true,
+              })
+            }
+          />
+          <Route
+            exact
+            path="/vr"
+            render={() =>
+              fallbackRender({
+                component: <VR />,
+                shouldBeLogged: true,
+              })
+            }
+          />
+          <Route
+            exact
+            path="/ranking"
+            render={() =>
+              fallbackRender({ shouldBeLogged: true, component: <Ranking /> })
+            }
+          />
+          <Route component={NotFound} />
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 }

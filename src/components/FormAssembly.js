@@ -4,6 +4,7 @@ import Piece from "../models/Piece";
 import assemblyService from "../services/AssemblyService";
 import Input from "./Input";
 import FormPiece from "./FormPiece";
+import { toast } from "react-toastify";
 
 const FormAssembly = ({
   assembly,
@@ -41,12 +42,12 @@ const FormAssembly = ({
           handleNewAssembly(response.data);
           window.location.reload();
         }
-        alert("Montagem salva com sucesso!");
+        toast.success("Montagem salva com sucesso!");
       } else {
-        alert("Algum erro ocorreu!");
+        toast.error("Algum erro ocorreu!");
       }
     } else {
-      alert("Preencha os campos vazios!");
+      toast.warn("Preencha os campos vazios!");
     }
   }
 
@@ -54,10 +55,10 @@ const FormAssembly = ({
     if (assembly && window.confirm("Deseja realmente excluir?")) {
       const response = await assemblyService.delete(assembly.id);
       if (response.status === 200) {
-        alert("Montagem excluída com sucesso!");
+        toast.success("Montagem excluída com sucesso!");
         window.location.reload();
       } else {
-        alert("Algum erro ocorreu!");
+        toast.error("Algum erro ocorreu!");
       }
     }
   }

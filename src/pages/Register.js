@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 import userService from "../services/UserService";
 import Input from "../components/Input";
 import Menu from "../components/Menu";
@@ -37,9 +38,9 @@ const Register = () => {
       await userService.add(new User(username.trim(), name.trim(), password));
       await userService.login(username.trim(), password);
       refreshUser();
-      alert("Usuário criado com sucesso!");
+      toast.success("Usuário criado com sucesso!");
     } else {
-      alert("Preencha os campos vazios!");
+      toast.warn("Preencha os campos vazios!");
     }
   }
 
