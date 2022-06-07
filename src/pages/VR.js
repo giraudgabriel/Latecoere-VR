@@ -200,6 +200,7 @@ class VR extends React.Component {
       // DESKTOP
       el.setAttribute("cursor", "rayOrigin: mouse;fuse: false");
     } else {
+      // el.setAttribute("cursor", "rayOrigin: mouse;fuse: false");
       el.setAttribute("cursor", "rayOrigin: cursor;fuse: true");
       el.object3D.visible = true;
     }
@@ -478,8 +479,8 @@ class VR extends React.Component {
         <div className="fixed-top">
           <Menu />
         </div>
-        <a-entity id="rig" position="10 -0.5 3">
-          <a-camera id="camera"></a-camera>
+        <a-entity id="rig" camera position="10 -0.5 3">
+          <a-camera id="camera" wasd-controls="acceleration:1000"></a-camera>
         </a-entity>
         <a-sound id="som" autoplay="true" position="10 -0.5 3"></a-sound>
         <Entity
